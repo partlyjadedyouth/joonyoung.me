@@ -108,7 +108,7 @@
 		</b>, Daejeon, Republic of Korea
 	</div>
 	<div class="font-light">Ph.D., Industrial Design</div>
-	<div class="font-light text-sm">
+	<div class="font-light text-sm italic">
 		Advisor: <a
 			href="https://galaxytourist.notion.site/Hwajung-Hong-cc10b0291bbe4ca38dbf4882cd687423"
 			target="_blank"
@@ -145,7 +145,7 @@
 		</a> Seoul National University
 	</div>
 	<div class="font-light">Undergraduate Research Intern</div>
-	<div class="font-light text-sm">
+	<div class="font-light text-sm italic">
 		Advisor: <a
 			href="https://www.hajinlim.com/"
 			target="_blank"
