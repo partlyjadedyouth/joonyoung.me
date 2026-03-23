@@ -132,9 +132,7 @@
 		B.A., Information Science and Culture Studies
 	</div>
 	<div class="font-extralight text-sm">Mar 2017 - Feb 2025 *</div>
-	<div class="font-extralight text-sm">
-		* includes a 2-year mandatory military service in Republic of Korea
-	</div>
+	<div class="font-extralight text-sm">* includes a 2-year mandatory military service</div>
 </section>
 
 <!-- EXPERIENCE -->
@@ -199,9 +197,9 @@
 					{/if}
 				{/each}
 			</div>
-			<div class="font-light text-sm">{publication.venue}</div>
+			<div class="font-light text-sm {!publication.award && 'mb-5'}">{publication.venue}</div>
 			{#if publication.award}
-				<div class="font-regular text-sm flex items-center gap-1">
+				<div class="font-regular text-sm flex items-center gap-1 mb-5">
 					<img src={awardIcon} alt="Award" class="h-4" />
 					<span>{publication.award}</span>
 				</div>
@@ -217,15 +215,18 @@
 	<!-- Mentor -->
 	<div class="mt-2">
 		<b class="font-medium">Graduate Mentor for URP Program, </b> KAIST
-		<div class="font-extralight text-sm">Mar 2026 - Sep 2026</div>
+		<div class="font-light text-sm italic">Mentee: Hyunji Huh (ID KAIST)</div>
+		<div class="font-extralight text-sm">Spring 2026</div>
 	</div>
 	<div class="mt-2">
 		<b class="font-medium">Graduate Teaching Assistant, </b> KAIST
 		<div class="font-light mr-1 text-sm">
-			Design Thinking for Startup (KEI560) <span class="font-extralight"> 2025-2026</span>
+			Design Thinking for Startup (KEI560) <span class="font-extralight">
+				Spring 2025 - Spring 2026</span
+			>
 		</div>
 		<div class="font-light mr-1 text-sm">
-			Photo Techniques (ID218) <span class="font-extralight"> 2025</span>
+			Photo Techniques (ID218) <span class="font-extralight"> Fall 2025</span>
 		</div>
 	</div>
 </section>
@@ -250,19 +251,26 @@
 	<h1 class="text-2xl font-medium">AWARDS & HONORS</h1>
 
 	<div class="mt-2">
-		<b class="font-medium">Honorable Mention Award</b>, ACM CHI 2026
+		<b class="font-medium">Honorable Mention Award</b>, ACM CHI
 	</div>
-	<div class="font-extralight text-sm">Mar 2026</div>
+	<div class="font-light text-sm italic">
+		Selected among the top 5% of the full paper submissions
+	</div>
+	<div class="font-extralight text-sm">2026</div>
 
 	<div class="mt-2">
 		<b class="font-medium">Student-Directed Education Grant</b>, Seoul National University
 	</div>
-	<div class="font-extralight text-sm">Sep 2024</div>
+	<div class="font-light text-sm italic">
+		Awarded a research grant for an outstanding undergraduate research proposal
+	</div>
+	<div class="font-extralight text-sm">2024</div>
 
 	<div class="mt-2">
 		<b class="font-medium">Merit-Based Scholarship</b>, Seoul National University
 	</div>
-	<div class="font-extralight text-sm">Feb 2017</div>
+	<div class="font-light text-sm italic">Undergraduate merit-based scholarship (10%)</div>
+	<div class="font-extralight text-sm">2017</div>
 </section>
 
 <section class="pb-20"></section>
