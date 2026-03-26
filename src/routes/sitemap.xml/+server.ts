@@ -1,0 +1,32 @@
+import type { RequestHandler } from './$types';
+import { getAllProjects } from '../(app)/projects/_data';
+
+export const prerender = true;
+
+const SITE_URL = 'https://joonyoung.me';
+const STATIC_PATHS = ['/', '/about', '/news', '/projects', '/blackscreen'] as const;
+
+export const GET: RequestHandler = () => {
+	const projectPaths = getAllProjects().map((project) => `/projects/${project.id}`);
+	const allPaths = [...STATIC_PATHS, ...projectPaths];
+	const lastmod = new Date().toISOString();
+
+	const body = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${allPaths
+	.map(
+		(path) => `  <url>
+    <loc>${SITE_URL}${path}</loc>
+    <lastmod>${lastmod}</lastmod>
+  </url>`
+	)
+	.join('\n')}
+</urlset>`;
+
+	return new Response(body, {
+		headers: {
+			'Content-Type': 'application/xml; charset=utf-8',
+			'Cache-Control': 'max-age=0, s-maxage=3600'
+		}
+	});
+};
