@@ -30,6 +30,23 @@
 	<ProfileContainer />
 </section>
 
+<!-- CHI26 Scheduler announcement -->
+<section class="pb-6">
+	<a
+		href="/chi26-schedule"
+		class="relative block overflow-hidden rounded-xl border border-amber-300/80 px-4 py-4 shadow-[0_0_0_1px_rgba(250,204,21,0.45),0_0_30px_rgba(251,191,36,0.3)] transition hover:shadow-[0_0_0_1px_rgba(245,158,11,0.5),0_0_36px_rgba(251,191,36,0.38)] sm:px-5"
+	>
+		<div class="pointer-events-none absolute inset-0 rounded-xl"></div>
+		<div class="relative z-10 space-y-1">
+			<h2 class="font-ibm text-base font-medium">I developed a CHI26 scheduler!</h2>
+			<p class="text-sm text-gray-700">
+				Easily share and save your CHI26 schedule by URL, then export it to your calendar apps with
+				an ICS file.
+			</p>
+		</div>
+	</a>
+</section>
+
 <!-- Horizontal Line -->
 <HorizontalLine my="10" />
 
