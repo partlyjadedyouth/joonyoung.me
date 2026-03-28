@@ -4,7 +4,14 @@ import { getAllProjects } from '../(app)/projects/_data';
 export const prerender = true;
 
 const SITE_URL = 'https://joonyoung.me';
-const STATIC_PATHS = ['/', '/about', '/news', '/projects', '/blackscreen'] as const;
+const STATIC_PATHS = [
+	'/',
+	'/about',
+	'/news',
+	'/projects',
+	'/blackscreen',
+	'/chi26-schedule'
+] as const;
 
 export const GET: RequestHandler = () => {
 	const projectPaths = getAllProjects().map((project) => `/projects/${project.id}`);
