@@ -1,4 +1,5 @@
 <script>
+	import Footer from '$lib/components/Footer.svelte';
 	/**
 	 * [(chi26-schedule)/chi26-schedule/+layout.svelte]
 	 * Custom layout for the CHI 2026 schedule page.
@@ -31,7 +32,7 @@
 
 <!-- Minimal footer -->
 <footer>
-	<div class="flex flex-col font-ibm text-xs font-light pt-2 pb-5 items-center text-gray-500">
+	<div class="flex flex-col font-ibm text-xs font-light pt-2 pb-5 items-center">
 		<p>
 			Data sourced from
 			<a
@@ -44,4 +45,5 @@
 			</a>
 		</p>
 	</div>
+	<Footer />
 </footer>
