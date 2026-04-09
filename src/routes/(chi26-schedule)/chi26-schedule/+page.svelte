@@ -124,6 +124,8 @@
 	let showResetConfirm = $state(false);
 	/** Currently expanded session in browser (shows papers) */
 	let expandedSessionId = $state<string | null>(null);
+	/** While searching: sessions manually folded by user (default is expanded) */
+	let collapsedSearchSessionIds = $state<Set<string>>(new Set());
 	/** Paper shown in detail modal */
 	let detailPaper = $state<CalendarPaper | null>(null);
 	/** Mobile: which panel is visible */
@@ -180,11 +182,18 @@
 		selectedPapers = new Set();
 		showResetConfirm = false;
 		expandedSessionId = null;
+		collapsedSearchSessionIds = new Set();
 		detailPaper = null;
 		searchQuery = '';
 		selectedType = '';
 		browserDay = '';
 	}
+
+	/** Reset manual folds whenever search query changes */
+	$effect(() => {
+		searchQuery;
+		collapsedSearchSessionIds = new Set();
+	});
 
 	// ─── Derived ─────────────────────────────────────────────────────
 
@@ -196,6 +205,16 @@
 				(a) => a.name.toLowerCase().includes(q) || a.affiliation.toLowerCase().includes(q)
 			) ||
 			false
+		);
+	}
+
+	/** Check if session-level fields match the current search query */
+	function sessionMatchesQuery(s: Session, q: string): boolean {
+		return (
+			s.title.toLowerCase().includes(q) ||
+			s.chairs.some((c) => c.name.toLowerCase().includes(q)) ||
+			s.room.toLowerCase().includes(q) ||
+			s.type.toLowerCase().includes(q)
 		);
 	}
 
@@ -224,14 +243,7 @@
 		if (selectedType) r = r.filter((s) => s.type === selectedType);
 		if (searchQuery.trim()) {
 			const q = searchQuery.trim().toLowerCase();
-			r = r.filter(
-				(s) =>
-					s.title.toLowerCase().includes(q) ||
-					s.chairs.some((c) => c.name.toLowerCase().includes(q)) ||
-					s.room.toLowerCase().includes(q) ||
-					s.type.toLowerCase().includes(q) ||
-					s.papers?.some((p) => paperMatchesQuery(p, q))
-			);
+			r = r.filter((s) => sessionMatchesQuery(s, q) || s.papers?.some((p) => paperMatchesQuery(p, q)));
 		}
 		return r;
 	});
@@ -327,27 +339,43 @@
 		selectedPapers = next;
 	}
 
-	/** Add all papers in a session */
-	function addAllPapers(session: Session): void {
-		const next = new Set(selectedPapers);
+	/** Visible papers in a session (filtered when searching) */
+	function visiblePapers(session: Session): { paper: Paper; idx: number }[] {
+		const q = searchQuery.trim().toLowerCase();
+		const showAllPapers = !q || sessionMatchesQuery(session, q);
+		const out: { paper: Paper; idx: number }[] = [];
 		for (let i = 0; i < (session.papers?.length || 0); i++) {
+			if (showAllPapers || matchingPaperKeys.has(paperKey(session.id, i))) {
+				out.push({ paper: session.papers[i], idx: i });
+			}
+		}
+		return out;
+	}
+
+	/** Add papers in a session, optionally limited to specific indexes */
+	function addAllPapers(session: Session, indexes?: number[]): void {
+		const next = new Set(selectedPapers);
+		const targets = indexes ?? [...Array(session.papers?.length || 0).keys()];
+		for (const i of targets) {
 			next.add(paperKey(session.id, i));
 		}
 		selectedPapers = next;
 	}
 
-	/** Remove all papers in a session */
-	function removeAllPapers(session: Session): void {
+	/** Remove papers in a session, optionally limited to specific indexes */
+	function removeAllPapers(session: Session, indexes?: number[]): void {
 		const next = new Set(selectedPapers);
-		for (let i = 0; i < (session.papers?.length || 0); i++) {
+		const targets = indexes ?? [...Array(session.papers?.length || 0).keys()];
+		for (const i of targets) {
 			next.delete(paperKey(session.id, i));
 		}
 		selectedPapers = next;
 	}
 
-	/** Check if any paper from a session is selected */
-	function hasAnySelected(session: Session): boolean {
-		for (let i = 0; i < (session.papers?.length || 0); i++) {
+	/** Check if any paper from a session is selected (optionally within specific indexes) */
+	function hasAnySelected(session: Session, indexes?: number[]): boolean {
+		const targets = indexes ?? [...Array(session.papers?.length || 0).keys()];
+		for (const i of targets) {
 			if (selectedPapers.has(paperKey(session.id, i))) return true;
 		}
 		return false;
@@ -355,7 +383,20 @@
 
 	/** Toggle expand/collapse of a session in the browser */
 	function toggleExpand(sessionId: string): void {
+		if (isSearching) {
+			const next = new Set(collapsedSearchSessionIds);
+			if (next.has(sessionId)) next.delete(sessionId);
+			else next.add(sessionId);
+			collapsedSearchSessionIds = next;
+			return;
+		}
 		expandedSessionId = expandedSessionId === sessionId ? null : sessionId;
+	}
+
+	/** Search mode: default expanded; non-search mode: single expanded session */
+	function isSessionExpanded(sessionId: string): boolean {
+		if (isSearching) return !collapsedSearchSessionIds.has(sessionId);
+		return expandedSessionId === sessionId;
 	}
 
 	/** Minutes from midnight (uses calGrid.start as fallback) */
@@ -608,6 +649,8 @@
 				<p class="font-ibm text-xs text-gray-400 text-center py-10">No sessions found.</p>
 			{:else}
 				{#each browseSessions as session (session.id)}
+					{@const visiblePaperEntries = visiblePapers(session)}
+					{@const visiblePaperIndexes = visiblePaperEntries.map(({ idx }) => idx)}
 					<!-- Session row -->
 					<div class="border-b border-gray-100" style="border-left: 3px solid {col(session.type)}">
 						<!-- Session header (clickable to expand) -->
@@ -618,11 +661,7 @@
 							<!-- Expand chevron -->
 							<svg
 								class="w-3 h-3 mt-0.5 flex-shrink-0 text-gray-400 transition-transform
-								{expandedSessionId === session.id ||
-								(isSearching &&
-									session.papers?.some((_, i) => matchingPaperKeys.has(paperKey(session.id, i))))
-									? 'rotate-90'
-									: ''}"
+								{isSessionExpanded(session.id) ? 'rotate-90' : ''}"
 								fill="none"
 								stroke="currentColor"
 								viewBox="0 0 24 24"
@@ -650,38 +689,36 @@
 								</div>
 								{#if session.papers?.length}
 									<span class="text-[10px] font-ibm text-gray-400">
-										{session.papers.length} paper{session.papers.length > 1 ? 's' : ''}
+										{visiblePaperEntries.length} paper{visiblePaperEntries.length > 1 ? 's' : ''}
 									</span>
 								{/if}
 							</div>
 						</button>
 
-						<!-- Expanded: paper list (auto-expand when searching and session has matching papers) -->
-						{#if expandedSessionId === session.id || (isSearching && session.papers?.some( (_, i) => matchingPaperKeys.has(paperKey(session.id, i)) ))}
+						<!-- Expanded: default-on while searching, toggleable by click -->
+						{#if isSessionExpanded(session.id)}
 							<div class="bg-gray-50/50 border-t border-gray-100">
 								<!-- Add/remove all button -->
-								{#if session.papers?.length}
+								{#if visiblePaperEntries.length}
 									<div class="px-3 py-1.5 flex gap-2">
 										<button
 											class="font-ibm text-[10px] px-2 py-0.5 rounded border border-gray-300 hover:bg-black hover:text-white transition-colors"
-											onclick={() => addAllPapers(session)}>Add all</button
+											onclick={() => addAllPapers(session, visiblePaperIndexes)}>Add all</button
 										>
-										{#if hasAnySelected(session)}
+										{#if hasAnySelected(session, visiblePaperIndexes)}
 											<button
 												class="font-ibm text-[10px] px-2 py-0.5 rounded border border-gray-300 hover:bg-black hover:text-white transition-colors"
-												onclick={() => removeAllPapers(session)}>Remove all</button
+												onclick={() => removeAllPapers(session, visiblePaperIndexes)}>Remove all</button
 											>
 										{/if}
 									</div>
 								{/if}
 
 								<!-- Individual papers -->
-								{#each session.papers || [] as paper, idx (paper.id || idx)}
-									{@const isMatch = isSearching && matchingPaperKeys.has(paperKey(session.id, idx))}
+								{#each visiblePaperEntries as { paper, idx } (paper.id || idx)}
 									<div
 										class="flex items-start gap-2 px-3 py-1.5 hover:bg-white group/paper transition-colors
-										{isMatch ? 'bg-blue-50 border-l-2 border-l-blue-400' : ''}
-										{isSearching && !isMatch ? 'opacity-40' : ''}"
+										{isSearching ? 'bg-blue-50 border-l-2 border-l-blue-400' : ''}"
 									>
 										<!-- Toggle checkbox -->
 										<button
