@@ -16,9 +16,9 @@
 			<p class="hover:font-medium" class:underline={$page.url.pathname.includes('/projects')}>
 				<a href="/projects">projects</a>
 			</p>
-			<p class="hover:font-medium" class:underline={$page.url.pathname.includes('/blog')}>
+			<!-- <p class="hover:font-medium" class:underline={$page.url.pathname.includes('/blog')}>
 				<a href="/blog">blog</a>
-			</p>
+			</p> -->
 		</div>
 	</div>
 </header>
