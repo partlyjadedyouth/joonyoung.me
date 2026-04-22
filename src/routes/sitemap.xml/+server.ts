@@ -1,5 +1,6 @@
 import type { RequestHandler } from './$types';
 import { getAllProjects } from '../(app)/projects/_data';
+import { getAllPosts } from '../(app)/blog/_data';
 
 export const prerender = true;
 
@@ -8,6 +9,7 @@ const STATIC_PATHS = [
 	'/',
 	'/about',
 	'/news',
+	'/blog',
 	'/projects',
 	'/blackscreen',
 	'/chi26-schedule'
@@ -15,7 +17,8 @@ const STATIC_PATHS = [
 
 export const GET: RequestHandler = () => {
 	const projectPaths = getAllProjects().map((project) => `/projects/${project.id}`);
-	const allPaths = [...STATIC_PATHS, ...projectPaths];
+	const blogPaths = getAllPosts().map((post) => `/blog/${post.id}`);
+	const allPaths = [...STATIC_PATHS, ...projectPaths, ...blogPaths];
 	const lastmod = new Date().toISOString();
 
 	const body = `<?xml version="1.0" encoding="UTF-8"?>

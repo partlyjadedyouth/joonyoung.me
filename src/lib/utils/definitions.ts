@@ -13,3 +13,11 @@ export interface Project {
 	award?: string;
 	links: LinkDetails[];
 }
+
+export interface BlogPost {
+	id: string;
+	date: string;
+	title: string;
+	description: string;
+	thumbnail?: string;
+}
