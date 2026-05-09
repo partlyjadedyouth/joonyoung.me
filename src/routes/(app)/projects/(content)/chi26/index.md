@@ -11,7 +11,7 @@
 		award: "CHI26 Honorable Mention",
 		role: 'Co-project leader (Project planning, data analysis, paper writing)',
 		links: [
-			{ type: 'pdf', url: '/pdfs/chi26.pdf' },
+			{ type: 'pdf', url: '/pdfs/chi26hbc.pdf' },
 			{ type: 'doi', url: 'https://dl.acm.org/doi/10.1145/3772318.3791154' },
 			{ type: 'arxiv', url: 'https://arxiv.org/abs/2601.23127' }
 		]

@@ -35,6 +35,7 @@ export const publications: Publication[] = [
 	},
 	{
 		title: 'NoRe: 일기 기반 AI 음악 생성 앱을 위한 디자인 제언',
+		href: '/pdfs/hcik25nore.pdf',
 		authors:
 			'Joonyoung Park*, YeEun Lee*, Hyewon Cho*, Hyehyun Chu*, Jiin Cheon*, Jinsu Eun, Hajin Lim',
 		venue: 'HCIK 2025',

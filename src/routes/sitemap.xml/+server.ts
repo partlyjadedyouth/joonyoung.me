@@ -12,7 +12,8 @@ const STATIC_PATHS = [
 	'/blog',
 	'/projects',
 	'/blackscreen',
-	'/chi26-schedule'
+	'/chi26-schedule',
+	'/pdfs'
 ] as const;
 
 export const GET: RequestHandler = () => {
