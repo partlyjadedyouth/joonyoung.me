@@ -193,10 +193,7 @@
 
 <!-- Project header presents date, award, title, subtitle, and resource links above the markdown body. -->
 <section class="flex flex-col items-start py-20">
-	<div class="mt-1 flex flex-col">
-		<!-- Project year is shown before the title to match academic portfolio conventions. -->
-		<p class="font-ibm text-lg">{project.year}</p>
-
+	<div class="flex flex-col">
 		{#if project.award}
 			<!-- Optional award callout is omitted entirely for projects without recognition metadata. -->
 			<div class="font-barlow font-medium text-lg italic flex items-center gap-2">
@@ -206,19 +203,29 @@
 		{/if}
 	</div>
 
-	<!-- Colon-delimited project titles are rendered as a title/subtitle pair when possible. -->
-	{#if titleParts.subtitle}
-		<p class="mt-3 font-biryani text-xl font-semibold leading-snug text-left sm:text-3xl">
-			{titleParts.title}
-		</p>
-		<p class="font-biryani font-regular text-lg leading-snug text-left sm:text-2xl">
-			{titleParts.subtitle}
-		</p>
-	{:else}
-		<p class="mt-3 font-biryani text-xl font-semibold leading-snug text-left sm:text-3xl">
-			{titleParts.title}
-		</p>
-	{/if}
+	<div>
+		<!-- Colon-delimited project titles are rendered as a title/subtitle pair when possible. -->
+		{#if titleParts.subtitle}
+			<p class="mt-3 font-biryani text-xl font-semibold leading-snug text-left sm:text-3xl">
+				{titleParts.title}
+			</p>
+			<div class="font-biryani font-regular text-lg leading-snug text-left sm:text-2xl">
+				{titleParts.subtitle}
+				<!-- Project year is shown before the title to match academic portfolio conventions. -->
+				<p class="inline-block text-lg font-light leading-snug sm:text-2xl">
+					({project.year})
+				</p>
+			</div>
+		{:else}
+			<div class="mt-3 font-biryani text-xl font-semibold leading-snug text-left sm:text-3xl">
+				{titleParts.title}
+				<!-- Project year is shown before the title to match academic portfolio conventions. -->
+				<p class="inline-block text-lg font-light leading-snug sm:text-2xl">
+					({project.year})
+				</p>
+			</div>
+		{/if}
+	</div>
 
 	<!-- Resource links use LinkContainer so icon and label behavior stays consistent across project pages. -->
 	<div class="mt-3 flex items-center justify-start gap-x-2">
