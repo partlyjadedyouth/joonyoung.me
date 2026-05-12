@@ -6,7 +6,7 @@
 	 * The data for the projects is passed as a prop to this component.
 	 */
 
-	import HorizontalLine from '$lib/components/HorizontalLine.svelte';
+	// import HorizontalLine from '$lib/components/HorizontalLine.svelte';
 	import ProfileContainer from '$lib/components/ProfileContainer.svelte';
 	import NewsSection from '$lib/components/NewsSection.svelte';
 	import ProjectCarousel from '$lib/components/ProjectCarousel.svelte';
@@ -31,7 +31,7 @@
 </section>
 
 <!-- Horizontal Line -->
-<HorizontalLine my="10" />
+<!-- <HorizontalLine my="10" /> -->
 
 <!-- Latest Projects section -->
 <section class="py-10">
@@ -53,7 +53,7 @@
 </section>
 
 <!-- Horizontal Line -->
-<HorizontalLine my="10" />
+<!-- <HorizontalLine my="10" /> -->
 
 <!-- News section -->
 <section class="py-10">
