@@ -6,7 +6,7 @@
 		year: '2024-2025',
 		title: 'NoRe: Augmenting Journaling Experience with Generative AI for Music Creation',
 		description:
-			"Developed NoRe, a system transforms users' written journal entries into emotionally resonant musical compositions.",
+			"Developed NoRe, a system transforms users' written journal entries into emotionally resonant musical compositions",
 		thumbnail,
 		tags: ['DIS25', 'cross-modal interaction', 'AI-generated music'],
 		role: 'Co-project leader (Project planning, user research, developing, paper writing)',
