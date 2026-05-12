@@ -1,3 +1,10 @@
+<!--
+	ProfileContainer.svelte
+	Composes the homepage identity block: name, affiliation, short biography, and
+	social/contact links. The email link is decoded client-side, while the rest of the
+	links are stored in a single array so ordering and separators stay consistent.
+-->
+
 <script>
 	import ObfuscatedEmail from '$lib/components/ObfuscatedEmail.svelte';
 	import { PRIMARY_EMAIL_DOMAIN_CODES, PRIMARY_EMAIL_USER_CODES } from '$lib/data/contact';
@@ -24,11 +31,11 @@
 	];
 </script>
 
-<!-- Profile pic, name and social buttons -->
+<!-- Identity header introduces the researcher before the longer biography below. -->
 <section class="flex flex-col items-start mb-7">
 	<!-- Profile pic -->
 	<!-- <enhanced:img alt="profile pic" src="$lib/images/profile.png" class="w-36 rounded-full" /> -->
-	<!-- Name -->
+	<!-- Name and affiliation links remain compact so they work as the page's opening signature. -->
 	<h1 class="font-semibold font-mono text-2xl">Joonyoung Park</h1>
 	<div class="font-medium font-ibm">
 		Ph.D. Student @
@@ -43,7 +50,7 @@
 	</div>
 </section>
 
-<!-- Self-introduction -->
+<!-- Self-introduction paragraphs mix static text with outbound academic and personal references. -->
 <section class="flex flex-col font-ibm font-light text-md hyphens-auto mb-7">
 	<p class="mb-3">
 		I am an HCI researcher and a Ph.D. student in the
@@ -131,7 +138,7 @@
 	</p>
 </section>
 
-<!-- Social Buttons -->
+<!-- Social link row renders separators between items and swaps in ObfuscatedEmail for the contact entry. -->
 <section class="flex flex-wrap items-center gap-x-2 gap-y-0 font-ibm font-light">
 	{#each socialLinks as link, i (`${link.label}-${link.href ?? 'obfuscated-email'}`)}
 		{#if link.obfuscated}

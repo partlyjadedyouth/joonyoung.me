@@ -1,10 +1,11 @@
-<script lang="ts">
-	/**
-	 * [/about/+page.svelte]
-	 * This component renders the About page, displaying personal information, contact details,
-	 * education background, work experience, awards, and proficiency in languages and tools.
-	 */
+<!--
+	+page.svelte
+	Renders the CV-style about page with contact details, education, experience,
+	publications, teaching, service, and awards. Publication data is grouped by year
+	in the script block so the markup can focus on section structure and styling.
+-->
 
+<script lang="ts">
 	import emailIcon from '$lib/images/email.svg';
 	import browser from '$lib/images/browser.png';
 	import linkedin from '$lib/images/linkedin.png';
@@ -15,6 +16,7 @@
 	import { PRIMARY_EMAIL_DOMAIN_CODES, PRIMARY_EMAIL_USER_CODES } from '$lib/data/contact';
 	import { publications } from '$lib/data/publications';
 
+	// Split author strings so the site owner's name can be highlighted wherever it appears.
 	const highlightedName = 'Joonyoung Park';
 	const splitAuthors = (authors: string) => authors.split(highlightedName);
 	const authorSegments = (authors: string) => {
@@ -24,6 +26,8 @@
 			highlight: index < parts.length - 1
 		}));
 	};
+
+	// Group publications by year once, then render years newest-first in the page body.
 	const groupedPublications = publications.reduce<Record<string, typeof publications>>(
 		(acc, publication) => {
 			const year = publication.year?.toString() ?? 'Other';
@@ -45,6 +49,7 @@
 	<meta name="description" content="Joonyoung's Blog" />
 </svelte:head>
 
+<!-- Contact header gives visitors quick access to the CV, website, email, and LinkedIn profile. -->
 <section class="pt-20">
 	<!-- Name -->
 	<div class="flex">
@@ -91,7 +96,7 @@
 	</div>
 </section>
 
-<!-- EDUCATION -->
+<!-- Education section lists degree history in reverse chronological order. -->
 <section class="mt-10 font-ibm">
 	<h1 class="text-2xl font-medium">EDUCATION</h1>
 	<!-- KAIST -->
@@ -135,7 +140,7 @@
 	<div class="font-extralight text-sm">* includes a 2-year mandatory military service</div>
 </section>
 
-<!-- EXPERIENCE -->
+<!-- Research and work experience section summarizes lab and industry roles. -->
 <section class="mt-10 font-ibm">
 	<h1 class="text-2xl font-medium">RESEARCH & WORK EXPERIENCE</h1>
 
@@ -168,11 +173,12 @@
 	<div class="font-extralight text-sm">Jul 2019 - Aug 2019</div>
 </section>
 
-<!-- PUBLICATIONS -->
+<!-- Publications are grouped by year, with horizontal dividers visually separating each group. -->
 <section class="mt-10 font-ibm">
 	<h1 class="text-2xl font-medium">PUBLICATIONS</h1>
 
 	{#each sortedPublicationYears as year}
+		<!-- Year label acts as the heading for all publications in that group. -->
 		<div class="mt-2 flex items-center">
 			<h2 class="font-medium">{year}</h2>
 			<div class="ml-4 flex-1">
@@ -180,6 +186,7 @@
 			</div>
 		</div>
 		{#each groupedPublications[year] as publication}
+			<!-- Titles become external links only when the publication data includes an href. -->
 			{#if publication.href}
 				<div class="mt-2 hover:underline">
 					<a href={publication.href} target="_blank" rel="noopener noreferrer">
@@ -190,6 +197,7 @@
 				<div class="mt-2">{publication.title}</div>
 			{/if}
 			<div class="font-light text-sm italic">
+				<!-- Author segments preserve the original text while underlining Joonyoung Park. -->
 				{#each authorSegments(publication.authors) as segment}
 					{segment.part}
 					{#if segment.highlight}
@@ -199,6 +207,7 @@
 			</div>
 			<div class="font-light text-sm {!publication.award && 'mb-5'}">{publication.venue}</div>
 			{#if publication.award}
+				<!-- Award callout appears inline with an icon for recognized papers. -->
 				<div class="font-regular text-sm flex items-center gap-1 mb-5">
 					<img src={awardIcon} alt="Award" class="h-4" />
 					<span>{publication.award}</span>
@@ -208,7 +217,7 @@
 	{/each}
 </section>
 
-<!-- TEACHING -->
+<!-- Teaching section separates mentoring and course-assistant responsibilities. -->
 <section class="mt-10 font-ibm">
 	<h1 class="text-2xl font-medium">TEACHING EXPERIENCE</h1>
 
@@ -231,7 +240,7 @@
 	</div>
 </section>
 
-<!-- ACADEMIC SERVICES -->
+<!-- Academic service section records reviewing work without adding extra visual weight. -->
 <section class="mt-10 font-ibm">
 	<h1 class="text-2xl font-medium">ACADEMIC SERVICES</h1>
 
@@ -246,7 +255,7 @@
 	<div class="font-light mr-1 text-sm">ACM DIS <span class="font-extralight"> 2025-2026</span></div>
 </section>
 
-<!-- AWARDS & HONORS -->
+<!-- Awards and honors section lists recognitions with short explanatory subtitles. -->
 <section class="mt-10 font-ibm">
 	<h1 class="text-2xl font-medium">AWARDS & HONORS</h1>
 

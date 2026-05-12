@@ -1,13 +1,13 @@
 /**
- * [/+page.ts]
- * This module defines the load function to fetch and parse markdown files
- * for selected projects. It retrieves the frontmatter metadata for
- * each project and returns an array of project data.
+ * +page.ts
+ * Loads homepage data for the app root route. The homepage only needs selected
+ * project metadata, so this load function delegates to the project data helper
+ * that has already gathered and sorted markdown frontmatter.
  */
 
 import { getSelectedProjects } from './projects/_data';
 
 export function load() {
-	// Returning the projects array as a response
+	// Returned data is consumed by +page.svelte to render the selected-project carousel.
 	return { projects: getSelectedProjects() };
 }

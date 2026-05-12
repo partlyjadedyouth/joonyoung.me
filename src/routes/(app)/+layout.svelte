@@ -1,28 +1,26 @@
-<script>
-	/**
-	 * [/+layout.svelte]
-	 * This component serves as the main layout for the application. It imports global CSS styles,
-	 * and includes the Header and Footer components. The layout ensures that the content
-	 * between the Header and Footer is centered and takes up the minimum height of the screen.
-	 */
+<!--
+	+layout.svelte
+	Defines the shared application shell for every route inside src/routes/(app).
+	It loads the global stylesheet, renders the persistent Header and Footer, and
+	constrains each page's slot content to the same centered readable column.
+-->
 
-	// Importing global CSS styles
+<script>
 	import '../../app.css';
-	// Importing the Header component
 	import Header from '$lib/components/Header.svelte';
-	// Importing the Footer component
 	import Footer from '$lib/components/Footer.svelte';
 </script>
 
-<!-- Rendering the Header component -->
+<!-- Header stays outside the centered page column so navigation can align with the viewport edge. -->
 <Header />
-<!-- Main container for the layout with flexbox properties -->
+
+<!-- Main wrapper fills the viewport height and centers route content horizontally. -->
 <div class="flex flex-col min-h-screen items-center">
-	<!-- Main content area with responsive width settings -->
+	<!-- Child pages render through the slot while inheriting one consistent max-width and padding system. -->
 	<main class="flex flex-col w-full flex-auto max-w-xl px-6 sm:px-0">
-		<!-- Slot to render the child content passed to this layout -->
 		<slot />
 	</main>
 </div>
-<!-- Rendering the Footer component -->
+
+<!-- Footer is shared across all pages and sits below the flexible content area. -->
 <Footer />

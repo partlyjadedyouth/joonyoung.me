@@ -1,5 +1,12 @@
+<!--
+	Footer.svelte
+	Displays the site footer with source attribution, framework credit, and the
+	manually maintained last-updated date. It is rendered by the app layout so the
+	information appears consistently beneath every public page.
+-->
+
 <footer>
-	<!-- Footer -->
+	<!-- Footer metadata is centered and intentionally low-contrast to avoid competing with page content. -->
 	<div class="flex flex-col font-ibm text-xs font-light pt-2 pb-5 items-center">
 		<p>
 			Copyright © 2024

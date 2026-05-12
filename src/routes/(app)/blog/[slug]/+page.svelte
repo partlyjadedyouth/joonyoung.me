@@ -1,7 +1,15 @@
+<!--
+	+page.svelte
+	Renders an individual blog post route. It receives post metadata from the server,
+	dynamically imports the matching markdown body, and enhances rendered markdown with
+	consistent spacing, link styling, image borders, and click-to-fullscreen images.
+-->
+
 <script lang="ts">
 	import type { PageData } from './$types';
 	import type { Component } from 'svelte';
 
+	// Route data includes the slug and frontmatter for the resolved blog post.
 	let { data }: { data: PageData } = $props();
 	let post = $derived(data.post);
 	let slug = $derived(data.slug);
@@ -12,6 +20,7 @@
 	let isLoading = $state(false);
 	let postContainerEl = $state<HTMLDivElement | null>(null);
 
+	// Markdown child nodes are padded unless the node wraps an image, which gets centered instead.
 	function addPaddingToElements() {
 		const container = postContainerEl;
 		if (container) {
@@ -26,6 +35,7 @@
 		}
 	}
 
+	// Add shared image styling and fullscreen behavior after markdown content is mounted.
 	function formatImages() {
 		const postContainer = postContainerEl;
 		if (postContainer) {
@@ -37,6 +47,7 @@
 		}
 	}
 
+	// Markdown links get a hover underline to match the rest of the site.
 	function addHoverEffectToLinks() {
 		const postContainer = postContainerEl;
 		if (postContainer) {
@@ -47,6 +58,7 @@
 		}
 	}
 
+	// Captions are emitted as emphasized text, so this aligns them with the image above.
 	function alignImageCaptionsCenter() {
 		const postContainer = postContainerEl;
 		if (postContainer) {
@@ -57,6 +69,7 @@
 		}
 	}
 
+	// Clicking a post image opens an overlay preview that can be dismissed by clicking anywhere.
 	function handleImageClick(event: MouseEvent) {
 		const img = event.target as HTMLImageElement;
 
@@ -86,6 +99,7 @@
 		});
 	}
 
+	// Cleanup prevents repeated MutationObserver runs from stacking duplicate image listeners.
 	function cleanup() {
 		const postContainer = postContainerEl;
 		if (postContainer) {
@@ -96,6 +110,7 @@
 		}
 	}
 
+	// Run all post-body enhancements together whenever markdown output changes.
 	function setupPage() {
 		cleanup();
 		addPaddingToElements();
@@ -104,6 +119,7 @@
 		alignImageCaptionsCenter();
 	}
 
+	// Dynamically import only the markdown component matching the current blog slug.
 	$effect(() => {
 		const modulePath = `/src/routes/(app)/blog/(content)/${slug}/index.md`;
 		const loader = blogModules[modulePath];
@@ -133,6 +149,7 @@
 		};
 	});
 
+	// Watch the markdown container because the dynamic component renders asynchronously.
 	$effect(() => {
 		if (!postContainerEl) {
 			return;
@@ -157,11 +174,13 @@
 	<meta name="description" content="Joonyoung's Blog" />
 </svelte:head>
 
+<!-- Blog post header centers the title and date before the rendered markdown body. -->
 <section class="flex flex-col items-center py-20">
 	<p class="font-biryani font-semibold text-3xl text-center">{post.title}</p>
 	<p class="font-ibm mt-1 text-lg">{post.date}</p>
 
 	<div class="mt-5 font-ibm">
+		<!-- Markdown body provides loading, error, and success states for the dynamic import. -->
 		<div
 			class="font-light hyphenate flex flex-col space-y-5"
 			id="post-container"

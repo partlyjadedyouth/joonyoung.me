@@ -1,3 +1,10 @@
+<!--
+	ProjectCarousel.svelte
+	Displays selected projects in a horizontally scrollable carousel. It tracks scroll
+	position to show edge fades, desktop arrow controls, and a responsive progress
+	indicator while reusing ProjectContainer for the card body.
+-->
+
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import ProjectContainer from '$lib/components/ProjectContainer.svelte';
@@ -40,6 +47,7 @@
 {#if projects.length > 0}
 	<div class="relative mt-5 w-full font-ibm">
 		<div class="relative">
+			<!-- Scroll track holds fixed-width project cards and reports scroll changes for controls. -->
 			<div
 				class="carousel-track flex gap-4 overflow-x-auto pb-1"
 				bind:this={carouselEl}
@@ -51,11 +59,13 @@
 			</div>
 
 			{#if canScrollPrevious}
+				<!-- Left fade appears only when more content exists before the visible viewport. -->
 				<div
 					class="pointer-events-none absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-white to-transparent"
 				></div>
 			{/if}
 			{#if canScrollNext}
+				<!-- Right fade hints that the carousel can continue scrolling forward. -->
 				<div
 					class="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-white to-transparent"
 				></div>
@@ -63,6 +73,7 @@
 		</div>
 
 		{#if projects.length > 1}
+			<!-- Mobile progress indicator replaces arrow controls where horizontal swiping is expected. -->
 			<div
 				class="mt-4 h-px w-full bg-gray-300 sm:hidden"
 				role="progressbar"
@@ -78,6 +89,7 @@
 				></div>
 			</div>
 
+			<!-- Desktop controls preserve layout width with hidden placeholders when an arrow is unavailable. -->
 			<div class="mt-4 hidden items-center gap-4 sm:flex">
 				{#if canScrollPrevious}
 					<button

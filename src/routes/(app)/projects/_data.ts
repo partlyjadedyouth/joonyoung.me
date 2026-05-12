@@ -1,7 +1,15 @@
+/**
+ * _data.ts
+ * Centralizes project metadata discovery for homepage and archive routes. Vite's
+ * import.meta.glob eagerly imports every markdown index file, then this module keeps
+ * only project content entries, extracts their frontmatter, and exposes sorted helpers.
+ */
+
 import type { Project } from '$lib/utils/definitions';
 
 const projectModules = import.meta.glob('/src/routes/**/index.md', { eager: true });
 
+// Convert year strings like "2024", "2023-2024", or malformed values into sortable numbers.
 const getYearValue = (year: string) => {
 	const matches = year.match(/\d{4}/g);
 	if (!matches || matches.length === 0) {
@@ -15,6 +23,7 @@ const getYearValue = (year: string) => {
 	return Number(matches[0]);
 };
 
+// Eagerly build one sorted project list so each exported helper can return cheap copies.
 const projects = Object.entries(projectModules)
 	.filter(([path]) => path.includes('/projects/(content)/'))
 	.map(([, module]) => (module as { metadata?: Project }).metadata)

@@ -1,3 +1,10 @@
+<!--
+	ProjectContainer.svelte
+	Renders a reusable project card with thumbnail, title, description, tags, optional
+	resource links, and optional year metadata. Parent routes can choose whether the
+	card links to a detail page and whether footer metadata should be displayed.
+-->
+
 <script lang="ts">
 	import type { Project } from '$lib/utils/definitions';
 	import documentIcon from '$lib/images/document.svg';
@@ -33,10 +40,15 @@
 	$: projectHref = `/projects/${project.id}`;
 </script>
 
+<!--
+	The article wrapper owns the shared card styling. Hover treatment only applies
+	when the card is configured to navigate to a project detail page.
+-->
 <article
 	class={`flex h-full flex-col overflow-hidden rounded-lg border border-gray-400 bg-white font-ibm transition-colors ${linkToProject ? 'hover:border-gray-800' : ''} ${cardClass}`}
 >
 	{#if linkToProject}
+		<!-- Linked thumbnails make carousel and grid cards easy to open from the image. -->
 		<a href={projectHref} class="block border-b border-gray-300">
 			<img
 				alt={project.title}
@@ -54,6 +66,7 @@
 		</div>
 	{/if}
 
+	<!-- Card body keeps descriptive content above optional tags and footer metadata. -->
 	<div class="flex flex-1 flex-col p-4">
 		{#if linkToProject}
 			<a href={projectHref} class="hover:underline">
@@ -68,6 +81,7 @@
 		</p>
 
 		{#if project.tags.length > 0}
+			<!-- Tags summarize research areas and are omitted when the content data has none. -->
 			<div class="mt-2 flex flex-wrap gap-1.5">
 				{#each project.tags as tag}
 					<span class="rounded-lg border border-black px-2 text-sm font-regular">
@@ -78,6 +92,7 @@
 		{/if}
 
 		{#if showYear || (showLinks && project.links.length > 0)}
+			<!-- Footer area is pushed to the bottom so cards in a grid keep aligned actions. -->
 			<div class="mt-auto pt-4">
 				{#if showLinks && project.links.length > 0}
 					<div class="flex flex-wrap gap-x-4 gap-y-2">
