@@ -67,5 +67,5 @@
 			</div>
 		</a>
 	</div>
-	<NewsSection items={recentNews} />
+	<NewsSection items={recentNews} mobileLimit={3} />
 </section>

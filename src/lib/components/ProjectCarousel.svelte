@@ -1,35 +1,12 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import type { Project } from '$lib/utils/definitions';
-	import documentIcon from '$lib/images/document.svg';
-	import githubIcon from '$lib/images/github-mark.svg';
-	import linkIcon from '$lib/images/link.svg';
-	import videoIcon from '$lib/images/video.svg';
 
 	export let projects: Project[] = [];
 
 	let carouselEl: HTMLDivElement | null = null;
 	let canScrollPrevious = false;
 	let canScrollNext = false;
-
-	const linkLabels: Record<string, string> = {
-		pdf: 'pdf',
-		video: 'video',
-		web: 'link',
-		doi: 'doi',
-		arxiv: 'arXiv',
-		code: 'code',
-		poster: 'poster'
-	};
-
-	const getLinkLabel = (type: string) => linkLabels[type] ?? type;
-
-	const getLinkIcon = (type: string) => {
-		if (type === 'video') return videoIcon;
-		if (type === 'code') return githubIcon;
-		if (type === 'pdf' || type === 'poster') return documentIcon;
-		return linkIcon;
-	};
 
 	const updateScrollState = () => {
 		if (!carouselEl) return;
@@ -66,7 +43,7 @@
 		>
 			{#each projects as project (project.id)}
 				<article
-					class="flex h-[27rem] w-[15.5rem] flex-none flex-col border rounded-lg border-gray-400 bg-white transition-colors hover:border-gray-800"
+					class="w-[15.5rem] flex-none rounded-lg border border-gray-400 bg-white transition-colors hover:border-gray-800"
 				>
 					<a href={`/projects/${project.id}`} class="block border-b border-gray-300">
 						<img
@@ -82,31 +59,13 @@
 								{project.year}
 							</span>
 							<a href={`/projects/${project.id}`} class="min-w-0 hover:underline">
-								<h2 class="project-card-title text-lg font-medium leading-snug">
-									{project.title}
-								</h2>
+								<h2 class="text-lg font-medium leading-snug">{project.title}</h2>
 							</a>
 						</div>
 
-						<p
-							class="project-card-description mt-3 text-sm font-light leading-relaxed text-gray-700"
-						>
+						<p class="mt-3 text-sm font-light leading-relaxed text-gray-700">
 							{project.description}
 						</p>
-
-						<div class="mt-auto flex flex-wrap gap-x-4 gap-y-2 pt-4">
-							{#each project.links as link (`${project.id}-${link.type}-${link.url}`)}
-								<a
-									href={link.url}
-									target="_blank"
-									rel="noopener noreferrer"
-									class="inline-flex items-center gap-1 text-sm font-light hover:underline"
-								>
-									<img src={getLinkIcon(link.type)} alt="" class="h-3.5 w-3.5" />
-									{getLinkLabel(link.type)}
-								</a>
-							{/each}
-						</div>
 					</div>
 				</article>
 			{/each}
@@ -151,22 +110,5 @@
 
 	.carousel-track::-webkit-scrollbar {
 		display: none;
-	}
-
-	.project-card-title,
-	.project-card-description {
-		display: -webkit-box;
-		-webkit-box-orient: vertical;
-		overflow: hidden;
-	}
-
-	.project-card-title {
-		-webkit-line-clamp: 3;
-		line-clamp: 3;
-	}
-
-	.project-card-description {
-		-webkit-line-clamp: 4;
-		line-clamp: 4;
 	}
 </style>
