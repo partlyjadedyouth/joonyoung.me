@@ -7,6 +7,8 @@
 		title: "Turtle's Snack Time",
 		description: 'Developed a serious game that simulates the life of a turtle in the ocean',
 		thumbnail,
+		tags: ['coursework', 'game'],
+		selected: false,
 		role: 'Game design, game development',
 		links: [{ type: 'web', url: 'https://joonpart.itch.io/turtles-snacktime' }]
 	};

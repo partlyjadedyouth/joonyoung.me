@@ -8,6 +8,8 @@
 		description:
 			'Developed an escape room game that constantly provides new themes and puzzles using generative AI',
 		thumbnail,
+		tags: ['coursework', 'game'],
+		selected: false,
 		role: 'Web development, prompt engineering',
 		links: [
 			{ type: 'web', url: 'https://escape-anywhere.vercel.app' },

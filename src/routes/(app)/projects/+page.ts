@@ -1,15 +1,13 @@
 /**
- * [/projects/+page.ts]
- * This module defines the load function to fetch and parse markdown files
- * for all projects. It retrieves the frontmatter metadata for each project
- * and returns an array of project data.
+ * +page.ts
+ * Loads metadata for the full projects archive. The heavy lifting lives in _data.ts,
+ * which imports markdown frontmatter, filters project content, and returns the sorted
+ * project list used by the archive page.
  */
 
-// Importing project helpers
 import { getAllProjects } from './_data';
 
-// Asynchronous function to load project data
 export function load() {
-	// Returning the projects array as a response
+	// Returned data is consumed by +page.svelte to render the project card grid.
 	return { projects: getAllProjects() };
 }

@@ -1,3 +1,10 @@
+<!--
+	NewsSection.svelte
+	Renders a reusable list of news items with formatted dates, HTML-enabled summaries,
+	and optional mobile truncation. The home page can pass a small limit while the news
+	archive can render the same component without hiding any entries.
+-->
+
 <script lang="ts">
 	import HorizontalLine from '$lib/components/HorizontalLine.svelte';
 	import newsData from '$lib/data/news.json';
@@ -11,6 +18,7 @@
 	};
 
 	export let items: NewsItem[] | null = null;
+	export let mobileLimit: number | null = null;
 
 	let news: NewsItem[] = items ?? newsData;
 
@@ -28,25 +36,33 @@
 </script>
 
 <section>
+	<!-- Empty state appears when callers provide an empty list instead of falling back to bundled news. -->
 	{#if news.length === 0}
 		<p class="mt-6 font-ibm text-sm text-gray-500">
 			No news to share just yet. Please check back soon.
 		</p>
 	{:else}
+		<!-- The bordered list groups all news items while dividers preserve separation between entries. -->
 		<div class="mt-6 border border-gray-400 rounded-lg">
 			{#each news as item, index (item.id)}
-				<article class="font-ibm p-5">
-					<p class="mt-3 text-xs font-light tracking-wide text-gray-500">
-						{formatDate(item.date)}
-					</p>
-					<h2 class="text-lg font-medium">{item.title}</h2>
-					<p class="mt-2 mb-3 text-sm font-light leading-relaxed text-gray-700">
-						{@html item.summary}
-					</p>
-				</article>
-				{#if index < news.length - 1}
-					<HorizontalLine w="full" color="gray" />
-				{/if}
+				<!-- Items past the mobile limit are hidden only below the sm breakpoint. -->
+				<div class={mobileLimit !== null && index >= mobileLimit ? 'hidden sm:block' : ''}>
+					<article class="font-ibm p-5">
+						<p class="mt-3 text-xs font-light tracking-wide text-gray-500">
+							{formatDate(item.date)}
+						</p>
+						<h2 class="text-lg font-medium">{item.title}</h2>
+						<p class="mt-2 mb-3 text-sm font-light leading-relaxed text-gray-700">
+							{@html item.summary}
+						</p>
+					</article>
+					{#if index < news.length - 1}
+						<!-- The divider after the last visible mobile item is also hidden to avoid a trailing line. -->
+						<div class={mobileLimit !== null && index === mobileLimit - 1 ? 'hidden sm:block' : ''}>
+							<HorizontalLine w="full" color="gray" />
+						</div>
+					{/if}
+				</div>
 			{/each}
 		</div>
 	{/if}

@@ -1,25 +1,125 @@
+<!--
+	ProjectContainer.svelte
+	Renders a reusable project card with thumbnail, title, description, tags, optional
+	resource links, and optional year metadata. Parent routes can choose whether the
+	card links to a detail page and whether footer metadata should be displayed.
+-->
+
 <script lang="ts">
-	export let id: string;
-	export let year: string;
-	export let title: string;
-	export let description: string;
-	export let thumbnail: string;
+	import type { Project } from '$lib/utils/definitions';
+	import documentIcon from '$lib/images/document.svg';
+	import githubIcon from '$lib/images/github-mark.svg';
+	import linkIcon from '$lib/images/link.svg';
+	import videoIcon from '$lib/images/video.svg';
+
+	export let project: Project;
+	export let showLinks = true;
+	export let showYear = false;
+	export let linkToProject = true;
+	export let cardClass = '';
+
+	const linkLabels: Record<string, string> = {
+		pdf: 'pdf',
+		video: 'video',
+		web: 'link',
+		doi: 'doi',
+		arxiv: 'arXiv',
+		code: 'code',
+		poster: 'poster'
+	};
+
+	const getLinkLabel = (type: string) => linkLabels[type] ?? type;
+
+	const getLinkIcon = (type: string) => {
+		if (type === 'video') return videoIcon;
+		if (type === 'code') return githubIcon;
+		if (type === 'pdf' || type === 'poster') return documentIcon;
+		return linkIcon;
+	};
+
+	$: projectHref = `/projects/${project.id}`;
 </script>
 
-<!-- Project container -->
-<a href={`/projects/${id}`}>
-	<div
-		class="font-ibm container border-gray-400 hover:border-gray-700 border rounded-lg my-4 px-4 py-5 min-h-40 flex items-center justify-between"
-	>
-		<!-- Project description -->
-		<div class="flex flex-col max-w-sm">
-			<p class="font-thin text-sm mb-3">{year}</p>
-			<p class="font-regular text-lg mb-1">{title}</p>
-			<p class="font-light text-sm">{description}</p>
+<!--
+	The article wrapper owns the shared card styling. Hover treatment only applies
+	when the card is configured to navigate to a project detail page.
+-->
+<article
+	class={`flex h-full flex-col overflow-hidden rounded-lg border border-gray-400 bg-white font-ibm transition-colors ${linkToProject ? 'hover:border-gray-800' : ''} ${cardClass}`}
+>
+	{#if linkToProject}
+		<!-- Linked thumbnails make carousel and grid cards easy to open from the image. -->
+		<a href={projectHref} class="block border-b border-gray-300">
+			<img
+				alt={project.title}
+				src={project.thumbnail}
+				class="aspect-[4/3] w-full rounded-t-lg object-cover"
+			/>
+		</a>
+	{:else}
+		<div class="border-b border-gray-300">
+			<img
+				alt={project.title}
+				src={project.thumbnail}
+				class="aspect-[4/3] w-full rounded-t-lg object-cover"
+			/>
 		</div>
-		<!-- Project thumbnail -->
-		<div class="w-36 border border-gray-400 hidden sm:block">
-			<img alt={title} src={thumbnail} class="object-contain" />
-		</div>
+	{/if}
+
+	<!-- Card body keeps descriptive content above optional tags and footer metadata. -->
+	<div class="flex flex-1 flex-col p-4">
+		{#if linkToProject}
+			<a href={projectHref} class="hover:underline">
+				<h2 class="text-lg font-medium leading-snug">{project.title}</h2>
+			</a>
+		{:else}
+			<h2 class="text-lg font-medium leading-snug">{project.title}</h2>
+		{/if}
+
+		<p class="mt-3 text-sm font-light leading-relaxed text-gray-700">
+			{project.description}
+		</p>
+
+		{#if project.tags.length > 0}
+			<!-- Tags summarize research areas and are omitted when the content data has none. -->
+			<div class="mt-2 flex flex-wrap gap-1.5">
+				{#each project.tags as tag}
+					<span class="rounded-lg border border-black px-2 text-sm font-regular">
+						{tag}
+					</span>
+				{/each}
+			</div>
+		{/if}
+
+		{#if showYear || (showLinks && project.links.length > 0)}
+			<!-- Footer area is pushed to the bottom so cards in a grid keep aligned actions. -->
+			<div class="mt-auto pt-4">
+				{#if showLinks && project.links.length > 0}
+					<div class="flex flex-wrap gap-x-4 gap-y-2">
+						{#each project.links as link (`${project.id}-${link.type}-${link.url}`)}
+							<a
+								href={link.url}
+								target="_blank"
+								rel="noopener noreferrer"
+								class="inline-flex items-center gap-1 text-sm font-light hover:underline"
+							>
+								<img src={getLinkIcon(link.type)} alt="" class="h-3.5 w-3.5" />
+								{getLinkLabel(link.type)}
+							</a>
+						{/each}
+					</div>
+				{/if}
+
+				{#if showYear}
+					<p
+						class={showLinks && project.links.length > 0
+							? 'mt-2 text-sm font-light text-gray-600'
+							: 'text-sm font-light text-gray-600'}
+					>
+						{project.year}
+					</p>
+				{/if}
+			</div>
+		{/if}
 	</div>
-</a>
+</article>

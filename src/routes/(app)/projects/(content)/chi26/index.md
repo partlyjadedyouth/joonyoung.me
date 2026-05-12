@@ -6,8 +6,10 @@
 		year: '2025-2026',
 		title: '"I Choose to Live, for Life Itself": Understanding Agency of Home-Based Care Patients Through Information Practices and Relational Dynamics in Care Networks',
 		description:
-			"A qualitative study of home-based care networks that explains how patient agency is expressed at home and why it often disappears from shared care planning",
+			"A study on home-based care that explains how patient agency is expressed at home and why it often disappears from the care",
 		thumbnail,
+		tags: ['CHI26', 'accessibility', 'care'],
+		selected: true,
 		award: "CHI26 Honorable Mention",
 		role: 'Co-project leader (Project planning, data analysis, paper writing)',
 		links: [

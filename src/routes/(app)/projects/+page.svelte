@@ -1,41 +1,33 @@
-<script lang="ts">
-	/**
-	 * [/projects/+page.svelte]
-	 * This component renders a list of projects. It sets the page title and description,
-	 * and iterates over the projects data to display each project using the ProjectContainer component.
-	 */
+<!--
+	+page.svelte
+	Renders the complete projects archive. It receives sorted project metadata from
+	+page.ts and displays each project with the shared ProjectContainer card, using a
+	two-column grid on medium screens and above.
+-->
 
-	// Importing the ProjectContainer component from the specified path
+<script lang="ts">
 	import ProjectContainer from '$lib/components/ProjectContainer.svelte';
 
-	// Use $props() to receive data from the page load function
+	// Route data supplies all projects gathered from markdown frontmatter.
 	let { data } = $props();
 
-	// Create a derived value for projects that updates when data changes
+	// Keep the archive reactive if the SvelteKit data layer refreshes this route.
 	let projects = $derived(data.projects);
 </script>
 
 <svelte:head>
-	<!-- Setting the page title to 'projects' -->
 	<title>projects | joonyoung park</title>
-	<!-- Adding meta description for SEO purposes -->
 	<meta name="description" content="Joonyoung's Blog" />
 </svelte:head>
 
-<!-- Main section with padding on the y-axis -->
+<!-- Main archive section mirrors the vertical spacing used by other route pages. -->
 <section class="py-20">
-	<!-- Heading for the projects section with specific font classes and margin -->
 	<h1 class="font-ibm font-medium text-2xl mb-5">PROJECTS</h1>
 
-	<!-- Looping through the 'projects' array and rendering ProjectContainer for each project -->
-	{#each projects as project}
-		<!-- ProjectContainer component with project details passed as props -->
-		<ProjectContainer
-			id={project.id}
-			year={project.year}
-			title={project.title}
-			description={project.description}
-			thumbnail={project.thumbnail}
-		/>
-	{/each}
+	<!-- Cards do not link through their footer resources here; the year acts as compact metadata. -->
+	<div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+		{#each projects as project (project.id)}
+			<ProjectContainer {project} showLinks={false} showYear={true} />
+		{/each}
+	</div>
 </section>

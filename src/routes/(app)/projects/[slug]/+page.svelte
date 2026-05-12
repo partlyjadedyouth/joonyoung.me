@@ -1,21 +1,23 @@
-<script lang="ts">
-	/**
-	 * [/projects/[slug]/+page.svelte]
-	 * This component renders a project page, displaying the project details
-	 * including the title, year, links, post content, and the role of the author.
-	 * It applies various styles and effects to the elements once the component is mounted.
-	 */
+<!--
+	+page.svelte
+	Renders an individual project detail page. It receives frontmatter metadata from
+	the server load function, dynamically imports the matching markdown body, and then
+	applies consistent spacing, link styling, and fullscreen image behavior to the
+	rendered markdown content.
+-->
 
+<script lang="ts">
 	import LinkContainer from '$lib/components/LinkContainer.svelte';
 	import awardIcon from '$lib/images/award.png';
 	import type { PageData } from './$types';
 	import type { Component } from 'svelte';
 
-	// Use $props() to receive data from the page load function
+	// Route data includes the URL slug and project frontmatter found on the server.
 	let { data }: { data: PageData } = $props();
-	// Create a derived value for project that updates when data changes
 	let project = $derived(data.project);
 	let slug = $derived(data.slug);
+
+	// Split colon-delimited titles into primary title and subtitle for clearer typography.
 	const splitProjectTitle = (title: string) => {
 		const separatorIndex = title.indexOf(':');
 		if (separatorIndex === -1) {
@@ -35,7 +37,7 @@
 	let isLoading = $state(false);
 	let postContainerEl = $state<HTMLDivElement | null>(null);
 
-	// Function to add padding to child elements of the post container
+	// Markdown output does not know about the page layout, so direct children receive spacing classes here.
 	function addPaddingToElements() {
 		const container = postContainerEl;
 		if (container) {
@@ -50,7 +52,7 @@
 		}
 	}
 
-	// Function to add borders to all images inside the post container
+	// Project images become bordered, rounded, full-width, and clickable after markdown renders.
 	function formatImages() {
 		const postContainer = postContainerEl;
 		if (postContainer) {
@@ -62,7 +64,7 @@
 		}
 	}
 
-	// Function to add hover effects to all links inside the post container
+	// Markdown links get the same hover treatment as hand-authored links elsewhere on the site.
 	function addHoverEffectToLinks() {
 		const postContainer = postContainerEl;
 		if (postContainer) {
@@ -73,7 +75,7 @@
 		}
 	}
 
-	// Function to center-align all image captions within the post container
+	// Image captions generated as emphasized text are centered to match the image presentation.
 	function alignImageCaptionsCenter() {
 		const postContainer = postContainerEl;
 		if (postContainer) {
@@ -84,7 +86,7 @@
 		}
 	}
 
-	// Function to handle image click for fullscreen view
+	// Clicking a markdown image opens a lightweight fullscreen overlay that closes on click.
 	function handleImageClick(event: MouseEvent) {
 		const img = event.target as HTMLImageElement;
 
@@ -98,8 +100,8 @@
 			'flex',
 			'items-center',
 			'justify-center',
-			'z-50',
-			'p-10'
+			'z-50'
+			// 'p-10'
 		);
 
 		const fullscreenImage = document.createElement('img');
@@ -114,7 +116,7 @@
 		});
 	}
 
-	// Function to clean up event listeners
+	// Remove image listeners before reformatting or unmounting to avoid duplicate click handlers.
 	function cleanup() {
 		const postContainer = postContainerEl;
 		if (postContainer) {
@@ -125,7 +127,7 @@
 		}
 	}
 
-	// Function to set up the page
+	// Apply all markdown presentation enhancements in one pass.
 	function setupPage() {
 		cleanup(); // Clean up old event listeners
 		addPaddingToElements();
@@ -134,8 +136,7 @@
 		alignImageCaptionsCenter();
 	}
 
-	// Use $effect to handle DOM manipulations when data changes
-	// This runs whenever the project data changes
+	// Load the route-specific markdown component whenever the slug changes.
 	$effect(() => {
 		const modulePath = `/src/routes/(app)/projects/(content)/${slug}/index.md`;
 		const loader = projectModules[modulePath];
@@ -160,12 +161,12 @@
 				isLoading = false;
 			});
 
-		// Return cleanup function
 		return () => {
 			cleanup();
 		};
 	});
 
+	// Observe the markdown container because dynamically imported content arrives after initial render.
 	$effect(() => {
 		if (!postContainerEl) {
 			return;
@@ -190,12 +191,14 @@
 	<meta name="description" content="Joonyoung's Blog" />
 </svelte:head>
 
+<!-- Project header presents date, award, title, subtitle, and resource links above the markdown body. -->
 <section class="flex flex-col items-start py-20">
 	<div class="mt-1 flex flex-col">
-		<!-- Project year -->
+		<!-- Project year is shown before the title to match academic portfolio conventions. -->
 		<p class="font-ibm text-lg">{project.year}</p>
 
 		{#if project.award}
+			<!-- Optional award callout is omitted entirely for projects without recognition metadata. -->
 			<div class="font-barlow font-medium text-lg italic flex items-center gap-2">
 				<img src={awardIcon} alt="Award" class="h-6" />
 				<span>{project.award}</span>
@@ -203,15 +206,21 @@
 		{/if}
 	</div>
 
-	<!-- Title -->
+	<!-- Colon-delimited project titles are rendered as a title/subtitle pair when possible. -->
 	{#if titleParts.subtitle}
-		<p class="mt-3 font-biryani font-semibold text-3xl text-left">{titleParts.title}</p>
-		<p class="font-biryani font-regular text-2xl text-left">{titleParts.subtitle}</p>
+		<p class="mt-3 font-biryani text-xl font-semibold leading-snug text-left sm:text-3xl">
+			{titleParts.title}
+		</p>
+		<p class="font-biryani font-regular text-lg leading-snug text-left sm:text-2xl">
+			{titleParts.subtitle}
+		</p>
 	{:else}
-		<p class="mt-3 font-biryani font-semibold text-3xl text-left">{titleParts.title}</p>
+		<p class="mt-3 font-biryani text-xl font-semibold leading-snug text-left sm:text-3xl">
+			{titleParts.title}
+		</p>
 	{/if}
 
-	<!-- PDF, Web, Video links -->
+	<!-- Resource links use LinkContainer so icon and label behavior stays consistent across project pages. -->
 	<div class="mt-3 flex items-center justify-start gap-x-2">
 		{#each project.links as link}
 			<LinkContainer type={link.type} url={link.url} />
@@ -219,7 +228,7 @@
 	</div>
 
 	<div class="mt-5 font-ibm">
-		<!-- Post -->
+		<!-- Markdown body renders through a dynamic Svelte component with loading and error states. -->
 		<div
 			class="font-light hyphenate flex flex-col space-y-5"
 			id="post-container"
@@ -233,7 +242,7 @@
 				<Content />
 			{/if}
 		</div>
-		<!-- What I've done -->
+		<!-- Role summary explains the author's contribution after the project narrative. -->
 		<div class="sm:mx-10">
 			<hr class="border-[0.5px] border-gray-500 w-full mt-12" />
 			<p class="mt-2 font-medium">What I've done...</p>

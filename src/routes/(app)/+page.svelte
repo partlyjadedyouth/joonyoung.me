@@ -1,21 +1,21 @@
-<script lang="ts">
-	/**
-	 * [/+page.svelte]
-	 * This component renders the main page, displaying the profile, news highlights, and latest projects.
-	 * It imports and uses ProfileContainer, NewsSection, and ProjectContainer components.
-	 * The data for the projects is passed as a prop to this component.
-	 */
+<!--
+	+page.svelte
+	Renders the homepage by combining the profile introduction, selected project
+	carousel, and latest news highlights. Project data comes from the route load
+	function, while news highlights are sliced locally from the shared news JSON.
+-->
 
-	import HorizontalLine from '$lib/components/HorizontalLine.svelte';
+<script lang="ts">
+	// import HorizontalLine from '$lib/components/HorizontalLine.svelte';
 	import ProfileContainer from '$lib/components/ProfileContainer.svelte';
 	import NewsSection from '$lib/components/NewsSection.svelte';
-	import ProjectContainer from '$lib/components/ProjectContainer.svelte';
+	import ProjectCarousel from '$lib/components/ProjectCarousel.svelte';
 	import newsData from '$lib/data/news.json';
 
-	// Use $props() to receive data from the page load function
+	// Route data supplies the selected projects gathered from markdown frontmatter.
 	let { data } = $props();
 
-	// Derived values that update reactively when data changes
+	// Derived values keep the page reactive if SvelteKit refreshes the loaded data.
 	let projects = $derived(data.projects);
 	const recentNews = newsData.slice(0, 4);
 </script>
@@ -25,38 +25,19 @@
 	<meta name="description" content="Joonyoung's Blog" />
 </svelte:head>
 
-<!-- Profile section -->
+<!-- Opening profile section establishes identity and contact context before listing work. -->
 <section class="pt-20 pb-10">
 	<ProfileContainer />
 </section>
 
 <!-- Horizontal Line -->
-<HorizontalLine my="10" />
+<!-- <HorizontalLine my="10" /> -->
 
-<!-- News section -->
+<!-- Selected projects are shown as a carousel on the homepage, with a path to the full archive. -->
 <section class="py-10">
 	<div class="flex justify-between">
-		<h1 class="font-ibm font-medium text-xl">News</h1>
-		<a href="/news">
-			<div
-				class="text-xs font-medium border rounded px-3 py-1 border-gray-500 hover:bg-black hover:text-white"
-			>
-				View all
-			</div>
-		</a>
-	</div>
-	<NewsSection items={recentNews} />
-</section>
-
-<!-- Horizontal Line -->
-<HorizontalLine my="10" />
-
-<!-- Latest Projects section -->
-<section class="py-10">
-	<div class="flex justify-between">
-		<!-- Title -->
-		<h1 class="font-ibm font-medium text-xl">Latest Projects</h1>
-		<!-- Link to /projects -->
+		<h1 class="font-ibm font-medium text-xl">SELECTED PROJECTS</h1>
+		<!-- The call-to-action keeps the homepage concise while exposing the complete project list. -->
 		<a href="/projects">
 			<div
 				class="text-xs font-medium border rounded px-3 py-1 border-gray-500 hover:bg-black hover:text-white"
@@ -66,14 +47,24 @@
 		</a>
 	</div>
 
-	<!-- Project container -->
-	{#each projects.slice(0, 3) as project}
-		<ProjectContainer
-			id={project.id}
-			year={project.year}
-			title={project.title}
-			description={project.description}
-			thumbnail={project.thumbnail}
-		/>
-	{/each}
+	<!-- ProjectCarousel owns horizontal scrolling, progress state, and responsive controls. -->
+	<ProjectCarousel {projects} />
+</section>
+
+<!-- Horizontal Line -->
+<!-- <HorizontalLine my="10" /> -->
+
+<!-- Latest news reuses the archive component with a mobile limit for a shorter homepage preview. -->
+<section class="py-10">
+	<div class="flex justify-between">
+		<h1 class="font-ibm font-medium text-xl">NEWS</h1>
+		<a href="/news">
+			<div
+				class="text-xs font-medium border rounded px-3 py-1 border-gray-500 hover:bg-black hover:text-white"
+			>
+				View all
+			</div>
+		</a>
+	</div>
+	<NewsSection items={recentNews} mobileLimit={3} />
 </section>

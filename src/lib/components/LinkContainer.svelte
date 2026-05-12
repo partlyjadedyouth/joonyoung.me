@@ -1,3 +1,10 @@
+<!--
+	LinkContainer.svelte
+	Normalizes publication and project resource links into a small icon-plus-label
+	control. The component maps a resource type, such as pdf, video, web, DOI, arXiv,
+	or code, to the appropriate icon and readable label while always opening externally.
+-->
+
 <script lang="ts">
 	import document from '$lib/images/document.svg';
 	import link from '$lib/images/link.svg';
@@ -9,6 +16,11 @@
 	export let url: string;
 </script>
 
+<!--
+	Each branch keeps the same flex layout and hover behavior while swapping only the
+	icon and text. The fallback branch still renders unknown resource types so content
+	data can introduce new labels without breaking the UI.
+-->
 <a href={url} target="_blank" rel="noopener noreferrer">
 	{#if type === 'pdf'}
 		<div class="flex items-center">
