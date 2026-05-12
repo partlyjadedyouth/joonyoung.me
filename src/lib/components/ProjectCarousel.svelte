@@ -11,6 +11,7 @@
 	let carouselEl: HTMLDivElement | null = null;
 	let canScrollPrevious = false;
 	let canScrollNext = false;
+	let scrollProgress = 0;
 
 	const linkLabels: Record<string, string> = {
 		pdf: 'pdf',
@@ -36,6 +37,7 @@
 		const maxScrollLeft = carouselEl.scrollWidth - carouselEl.clientWidth;
 		canScrollPrevious = carouselEl.scrollLeft > 2;
 		canScrollNext = carouselEl.scrollLeft < maxScrollLeft - 2;
+		scrollProgress = maxScrollLeft > 0 ? carouselEl.scrollLeft / maxScrollLeft : 0;
 	};
 
 	const scrollCarousel = (direction: -1 | 1) => {
@@ -127,7 +129,22 @@
 		</div>
 
 		{#if projects.length > 1}
-			<div class="mt-4 hidden items-center justify-between sm:flex">
+			<div
+				class="mt-4 h-px w-full bg-gray-300 sm:hidden"
+				role="progressbar"
+				aria-label="Project carousel position"
+				aria-valuemin="0"
+				aria-valuemax="100"
+				aria-valuenow={Math.round(scrollProgress * 100)}
+			>
+				<div
+					class="h-px bg-black"
+					style:width={`${Math.max(100 / projects.length, 12)}%`}
+					style:margin-left={`calc((100% - ${Math.max(100 / projects.length, 12)}%) * ${scrollProgress})`}
+				></div>
+			</div>
+
+			<div class="mt-4 hidden items-center gap-4 sm:flex">
 				{#if canScrollPrevious}
 					<button
 						type="button"
@@ -140,6 +157,20 @@
 				{:else}
 					<div class="h-10 w-10" aria-hidden="true"></div>
 				{/if}
+				<div
+					class="h-px flex-1 bg-gray-300"
+					role="progressbar"
+					aria-label="Project carousel position"
+					aria-valuemin="0"
+					aria-valuemax="100"
+					aria-valuenow={Math.round(scrollProgress * 100)}
+				>
+					<div
+						class="h-px bg-black"
+						style:width={`${Math.max(100 / projects.length, 12)}%`}
+						style:margin-left={`calc((100% - ${Math.max(100 / projects.length, 12)}%) * ${scrollProgress})`}
+					></div>
+				</div>
 				{#if canScrollNext}
 					<button
 						type="button"
