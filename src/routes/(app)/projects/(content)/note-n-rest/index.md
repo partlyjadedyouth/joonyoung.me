@@ -11,6 +11,7 @@
 			'Designed an AI solution to help users take care of mental well-being by extracting emotions through human-AI interaction and generate diaries and music',
 		thumbnail,
 		tags: ['coursework', 'design'],
+		selected: false,
 		role: 'Service design, UI/UX design',
 		links: [
 			{ type: 'pdf', url: slides },

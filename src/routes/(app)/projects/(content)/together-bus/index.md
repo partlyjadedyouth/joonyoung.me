@@ -10,6 +10,7 @@
 			'Designed a charter bus service for rural residents who have trouble getting to concerts in Seoul',
 		thumbnail,
 		tags: ['coursework', 'design'],
+		selected: false,
 		role: 'Product design, UX design, project planning',
 		links: [{ type: 'pdf', url: deck }]
 	};

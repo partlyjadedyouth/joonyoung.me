@@ -30,3 +30,5 @@ const projects = Object.entries(projectModules)
 export const getAllProjects = () => projects.slice();
 
 export const getLatestProjects = (limit: number) => projects.slice(0, limit);
+
+export const getSelectedProjects = () => projects.filter((project) => project.selected);
