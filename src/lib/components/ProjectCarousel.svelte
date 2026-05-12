@@ -77,14 +77,18 @@
 					</a>
 
 					<div class="flex flex-1 flex-col p-4">
-						<div class="flex flex-col items-start justify-between gap-1">
-							<span class="shrink-0 text-xs font-light text-gray-600">
-								{project.year}
-							</span>
-							<a href={`/projects/${project.id}`} class="min-w-0 hover:underline">
-								<h2 class="text-lg font-medium leading-snug">{project.title}</h2>
-							</a>
-						</div>
+						<a href={`/projects/${project.id}`} class="hover:underline">
+							<h2 class="text-lg font-medium leading-snug">
+								{project.title}
+								{#if project.tags.length > 0}
+									<span
+										class="ml-1 inline-block rounded-lg border border-black px-2 align-baseline text-sm font-regular"
+									>
+										{project.tags[0]}
+									</span>
+								{/if}
+							</h2>
+						</a>
 
 						<p class="mt-3 text-sm font-light leading-relaxed text-gray-700">
 							{project.description}

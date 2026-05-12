@@ -4,6 +4,7 @@
 	export let title: string;
 	export let description: string;
 	export let thumbnail: string;
+	export let tags: string[] = [];
 </script>
 
 <!-- Project container -->
@@ -13,9 +14,21 @@
 	>
 		<!-- Project description -->
 		<div class="flex flex-col max-w-sm">
-			<p class="font-thin text-sm mb-3">{year}</p>
 			<p class="font-regular text-lg mb-1">{title}</p>
 			<p class="font-light text-sm">{description}</p>
+
+			<div class="mt-3 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm">
+				<p class="font-thin">{year}</p>
+				{#if tags.length > 0}
+					<div class="flex flex-wrap gap-x-1.5 gap-y-1">
+						{#each tags as tag}
+							<span class="border rounded-lg border-black px-2 font-regular">
+								{tag}
+							</span>
+						{/each}
+					</div>
+				{/if}
+			</div>
 		</div>
 		<!-- Project thumbnail -->
 		<div class="w-36 border border-gray-400 hidden sm:block">

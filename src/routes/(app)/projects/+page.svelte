@@ -36,6 +36,7 @@
 			title={project.title}
 			description={project.description}
 			thumbnail={project.thumbnail}
+			tags={project.tags}
 		/>
 	{/each}
 </section>
