@@ -98,8 +98,8 @@
 			'flex',
 			'items-center',
 			'justify-center',
-			'z-50',
-			'p-10'
+			'z-50'
+			// 'p-10'
 		);
 
 		const fullscreenImage = document.createElement('img');
