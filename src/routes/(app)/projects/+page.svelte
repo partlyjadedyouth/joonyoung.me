@@ -2,10 +2,9 @@
 	/**
 	 * [/projects/+page.svelte]
 	 * This component renders a list of projects. It sets the page title and description,
-	 * and iterates over the projects data to display each project using the ProjectContainer component.
+	 * and displays each project with the shared project card UI.
 	 */
 
-	// Importing the ProjectContainer component from the specified path
 	import ProjectContainer from '$lib/components/ProjectContainer.svelte';
 
 	// Use $props() to receive data from the page load function
@@ -27,16 +26,9 @@
 	<!-- Heading for the projects section with specific font classes and margin -->
 	<h1 class="font-ibm font-medium text-2xl mb-5">PROJECTS</h1>
 
-	<!-- Looping through the 'projects' array and rendering ProjectContainer for each project -->
-	{#each projects as project}
-		<!-- ProjectContainer component with project details passed as props -->
-		<ProjectContainer
-			id={project.id}
-			year={project.year}
-			title={project.title}
-			description={project.description}
-			thumbnail={project.thumbnail}
-			tags={project.tags}
-		/>
-	{/each}
+	<div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+		{#each projects as project (project.id)}
+			<ProjectContainer {project} showLinks={false} showYear={true} />
+		{/each}
+	</div>
 </section>
