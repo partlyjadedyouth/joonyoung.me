@@ -2,8 +2,8 @@
 	+page.svelte
 	Renders an individual project detail page. It receives frontmatter metadata from
 	the server load function, dynamically imports the matching markdown body, and then
-	applies consistent spacing, link styling, and fullscreen image behavior to the
-	rendered markdown content.
+	applies consistent spacing, link styling, and image presentation to the rendered
+	markdown content.
 -->
 
 <script lang="ts">
@@ -52,14 +52,13 @@
 		}
 	}
 
-	// Project images become bordered, rounded, full-width, and clickable after markdown renders.
+	// Project images become bordered, rounded, and full-width after markdown renders.
 	function formatImages() {
 		const postContainer = postContainerEl;
 		if (postContainer) {
 			const images = postContainer.getElementsByTagName('img');
 			for (let img of images) {
-				img.classList.add('rounded', 'border', 'border-gray-400', 'w-full', 'cursor-pointer');
-				img.addEventListener('click', handleImageClick);
+				img.classList.add('rounded', 'border', 'border-gray-400', 'w-full');
 			}
 		}
 	}
@@ -86,50 +85,8 @@
 		}
 	}
 
-	// Clicking a markdown image opens a lightweight fullscreen overlay that closes on click.
-	function handleImageClick(event: MouseEvent) {
-		const img = event.target as HTMLImageElement;
-
-		const fullscreenContainer = document.createElement('div');
-		fullscreenContainer.id = 'fullscreen-container';
-		fullscreenContainer.classList.add(
-			'fixed',
-			'inset-0',
-			'bg-black',
-			'bg-opacity-75',
-			'flex',
-			'items-center',
-			'justify-center',
-			'z-50'
-			// 'p-10'
-		);
-
-		const fullscreenImage = document.createElement('img');
-		fullscreenImage.src = img.src;
-		fullscreenImage.classList.add('max-w-full', 'max-h-full');
-
-		fullscreenContainer.appendChild(fullscreenImage);
-		document.body.appendChild(fullscreenContainer);
-
-		fullscreenContainer.addEventListener('click', () => {
-			document.body.removeChild(fullscreenContainer);
-		});
-	}
-
-	// Remove image listeners before reformatting or unmounting to avoid duplicate click handlers.
-	function cleanup() {
-		const postContainer = postContainerEl;
-		if (postContainer) {
-			const images = postContainer.getElementsByTagName('img');
-			for (let img of images) {
-				img.removeEventListener('click', handleImageClick);
-			}
-		}
-	}
-
 	// Apply all markdown presentation enhancements in one pass.
 	function setupPage() {
-		cleanup(); // Clean up old event listeners
 		addPaddingToElements();
 		formatImages();
 		addHoverEffectToLinks();
@@ -160,10 +117,6 @@
 			.finally(() => {
 				isLoading = false;
 			});
-
-		return () => {
-			cleanup();
-		};
 	});
 
 	// Observe the markdown container because dynamically imported content arrives after initial render.
@@ -181,7 +134,6 @@
 
 		return () => {
 			observer.disconnect();
-			cleanup();
 		};
 	});
 </script>
