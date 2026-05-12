@@ -2,14 +2,14 @@
 	/**
 	 * [/+page.svelte]
 	 * This component renders the main page, displaying the profile, news highlights, and latest projects.
-	 * It imports and uses ProfileContainer, NewsSection, and ProjectContainer components.
+	 * It imports and uses ProfileContainer, NewsSection, and ProjectCarousel components.
 	 * The data for the projects is passed as a prop to this component.
 	 */
 
 	import HorizontalLine from '$lib/components/HorizontalLine.svelte';
 	import ProfileContainer from '$lib/components/ProfileContainer.svelte';
 	import NewsSection from '$lib/components/NewsSection.svelte';
-	import ProjectContainer from '$lib/components/ProjectContainer.svelte';
+	import ProjectCarousel from '$lib/components/ProjectCarousel.svelte';
 	import newsData from '$lib/data/news.json';
 
 	// Use $props() to receive data from the page load function
@@ -33,24 +33,6 @@
 <!-- Horizontal Line -->
 <HorizontalLine my="10" />
 
-<!-- News section -->
-<section class="py-10">
-	<div class="flex justify-between">
-		<h1 class="font-ibm font-medium text-xl">News</h1>
-		<a href="/news">
-			<div
-				class="text-xs font-medium border rounded px-3 py-1 border-gray-500 hover:bg-black hover:text-white"
-			>
-				View all
-			</div>
-		</a>
-	</div>
-	<NewsSection items={recentNews} />
-</section>
-
-<!-- Horizontal Line -->
-<HorizontalLine my="10" />
-
 <!-- Latest Projects section -->
 <section class="py-10">
 	<div class="flex justify-between">
@@ -66,14 +48,24 @@
 		</a>
 	</div>
 
-	<!-- Project container -->
-	{#each projects.slice(0, 3) as project}
-		<ProjectContainer
-			id={project.id}
-			year={project.year}
-			title={project.title}
-			description={project.description}
-			thumbnail={project.thumbnail}
-		/>
-	{/each}
+	<!-- Project carousel -->
+	<ProjectCarousel {projects} />
+</section>
+
+<!-- Horizontal Line -->
+<HorizontalLine my="10" />
+
+<!-- News section -->
+<section class="py-10">
+	<div class="flex justify-between">
+		<h1 class="font-ibm font-medium text-xl">News</h1>
+		<a href="/news">
+			<div
+				class="text-xs font-medium border rounded px-3 py-1 border-gray-500 hover:bg-black hover:text-white"
+			>
+				View all
+			</div>
+		</a>
+	</div>
+	<NewsSection items={recentNews} />
 </section>
