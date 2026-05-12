@@ -13,13 +13,13 @@
 	let canScrollNext = false;
 
 	const linkLabels: Record<string, string> = {
-		pdf: 'PDF',
-		video: 'Video',
-		web: 'Demo',
-		doi: 'DOI',
+		pdf: 'pdf',
+		video: 'video',
+		web: 'link',
+		doi: 'doi',
 		arxiv: 'arXiv',
-		code: 'Code',
-		poster: 'Poster'
+		code: 'code',
+		poster: 'poster'
 	};
 
 	const getLinkLabel = (type: string) => linkLabels[type] ?? type;
@@ -66,28 +66,26 @@
 		>
 			{#each projects as project (project.id)}
 				<article
-					class="flex h-[27rem] w-[15.5rem] flex-none flex-col border border-gray-400 bg-white transition-colors hover:border-gray-800"
+					class="flex h-[27rem] w-[15.5rem] flex-none flex-col border rounded-lg border-gray-400 bg-white transition-colors hover:border-gray-800"
 				>
 					<a href={`/projects/${project.id}`} class="block border-b border-gray-300">
 						<img
 							alt={project.title}
 							src={project.thumbnail}
-							class="aspect-[4/3] w-full object-cover"
+							class="aspect-[4/3] w-full object-cover rounded-t-lg"
 						/>
 					</a>
 
 					<div class="flex flex-1 flex-col p-4">
-						<div class="flex items-start justify-between gap-3">
+						<div class="flex flex-col items-start justify-between gap-1">
+							<span class="shrink-0 text-xs font-light text-gray-600">
+								{project.year}
+							</span>
 							<a href={`/projects/${project.id}`} class="min-w-0 hover:underline">
 								<h2 class="project-card-title text-lg font-medium leading-snug">
 									{project.title}
 								</h2>
 							</a>
-							<span
-								class="shrink-0 rounded border border-gray-300 px-2 py-1 text-xs font-light text-gray-600"
-							>
-								{project.year}
-							</span>
 						</div>
 
 						<p
