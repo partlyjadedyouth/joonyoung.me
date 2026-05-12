@@ -1,5 +1,5 @@
 <script context="module">
-	import thumbnail from './NoRe_Write.jpeg?url';
+	import thumbnail from './nore.png?url';
 
 	export const metadata = {
 		id: 'nore',

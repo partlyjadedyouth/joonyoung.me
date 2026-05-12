@@ -6,7 +6,7 @@
 		year: '2024-2026',
 		title: 'Enhancing Patient Participation in Emergency Department Through Patient-Friendly Clinical Notes',
 		description:
-			"A study on LLM-generated documents that transform clinical notes into plain-language explanations to support patient understanding, questioning, and participation in emergency care",
+			"A study on LLM-generated documents that transform clinical notes into patient-friendly forms to support patient participation in emergency care",
 		thumbnail,
 		tags: ['Scientific Reports', 'healthcare', 'AI-mediated communication'],
 		selected: true,
