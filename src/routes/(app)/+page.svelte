@@ -37,7 +37,7 @@
 <section class="py-10">
 	<div class="flex justify-between">
 		<!-- Title -->
-		<h1 class="font-ibm font-medium text-xl">Selected Projects</h1>
+		<h1 class="font-ibm font-medium text-xl">SELECTED PROJECTS</h1>
 		<!-- Link to /projects -->
 		<a href="/projects">
 			<div
@@ -58,7 +58,7 @@
 <!-- News section -->
 <section class="py-10">
 	<div class="flex justify-between">
-		<h1 class="font-ibm font-medium text-xl">News</h1>
+		<h1 class="font-ibm font-medium text-xl">NEWS</h1>
 		<a href="/news">
 			<div
 				class="text-xs font-medium border rounded px-3 py-1 border-gray-500 hover:bg-black hover:text-white"
