@@ -66,7 +66,7 @@
 		>
 			{#each projects as project (project.id)}
 				<article
-					class="w-[15.5rem] flex-none rounded-lg border border-gray-400 bg-white transition-colors hover:border-gray-800"
+					class="w-72 flex-none rounded-lg border border-gray-400 bg-white transition-colors hover:border-gray-800"
 				>
 					<a href={`/projects/${project.id}`} class="block border-b border-gray-300">
 						<img
@@ -78,21 +78,22 @@
 
 					<div class="flex flex-1 flex-col p-4">
 						<a href={`/projects/${project.id}`} class="hover:underline">
-							<h2 class="text-lg font-medium leading-snug">
-								{project.title}
-								{#if project.tags.length > 0}
-									<span
-										class="ml-1 inline-block rounded-lg border border-black px-2 align-baseline text-sm font-regular"
-									>
-										{project.tags[0]}
-									</span>
-								{/if}
-							</h2>
+							<h2 class="text-lg font-medium leading-snug">{project.title}</h2>
 						</a>
 
 						<p class="mt-3 text-sm font-light leading-relaxed text-gray-700">
 							{project.description}
 						</p>
+
+						{#if project.tags.length > 0}
+							<div class="mt-2 flex flex-wrap gap-1.5">
+								{#each project.tags as tag}
+									<span class="rounded-lg border border-black px-2 text-sm font-regular">
+										{tag}
+									</span>
+								{/each}
+							</div>
+						{/if}
 
 						<div class="mt-4 flex flex-wrap gap-x-4 gap-y-2">
 							{#each project.links as link (`${project.id}-${link.type}-${link.url}`)}
