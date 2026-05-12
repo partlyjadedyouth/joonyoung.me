@@ -127,7 +127,7 @@
 		</div>
 
 		{#if projects.length > 1}
-			<div class="mt-4 flex items-center justify-between">
+			<div class="mt-4 hidden items-center justify-between sm:flex">
 				{#if canScrollPrevious}
 					<button
 						type="button"
