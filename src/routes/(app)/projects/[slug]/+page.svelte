@@ -205,10 +205,16 @@
 
 	<!-- Title -->
 	{#if titleParts.subtitle}
-		<p class="mt-3 font-biryani font-semibold text-3xl text-left">{titleParts.title}</p>
-		<p class="font-biryani font-regular text-2xl text-left">{titleParts.subtitle}</p>
+		<p class="mt-3 font-biryani text-xl font-semibold leading-snug text-left sm:text-3xl">
+			{titleParts.title}
+		</p>
+		<p class="font-biryani font-regular text-lg leading-snug text-left sm:text-2xl">
+			{titleParts.subtitle}
+		</p>
 	{:else}
-		<p class="mt-3 font-biryani font-semibold text-3xl text-left">{titleParts.title}</p>
+		<p class="mt-3 font-biryani text-xl font-semibold leading-snug text-left sm:text-3xl">
+			{titleParts.title}
+		</p>
 	{/if}
 
 	<!-- PDF, Web, Video links -->

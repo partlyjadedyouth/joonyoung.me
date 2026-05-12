@@ -1,12 +1,35 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import type { Project } from '$lib/utils/definitions';
+	import documentIcon from '$lib/images/document.svg';
+	import githubIcon from '$lib/images/github-mark.svg';
+	import linkIcon from '$lib/images/link.svg';
+	import videoIcon from '$lib/images/video.svg';
 
 	export let projects: Project[] = [];
 
 	let carouselEl: HTMLDivElement | null = null;
 	let canScrollPrevious = false;
 	let canScrollNext = false;
+
+	const linkLabels: Record<string, string> = {
+		pdf: 'pdf',
+		video: 'video',
+		web: 'link',
+		doi: 'doi',
+		arxiv: 'arXiv',
+		code: 'code',
+		poster: 'poster'
+	};
+
+	const getLinkLabel = (type: string) => linkLabels[type] ?? type;
+
+	const getLinkIcon = (type: string) => {
+		if (type === 'video') return videoIcon;
+		if (type === 'code') return githubIcon;
+		if (type === 'pdf' || type === 'poster') return documentIcon;
+		return linkIcon;
+	};
 
 	const updateScrollState = () => {
 		if (!carouselEl) return;
@@ -66,38 +89,52 @@
 						<p class="mt-3 text-sm font-light leading-relaxed text-gray-700">
 							{project.description}
 						</p>
+
+						<div class="mt-4 flex flex-wrap gap-x-4 gap-y-2">
+							{#each project.links as link (`${project.id}-${link.type}-${link.url}`)}
+								<a
+									href={link.url}
+									target="_blank"
+									rel="noopener noreferrer"
+									class="inline-flex items-center gap-1 text-sm font-light hover:underline"
+								>
+									<img src={getLinkIcon(link.type)} alt="" class="h-3.5 w-3.5" />
+									{getLinkLabel(link.type)}
+								</a>
+							{/each}
+						</div>
 					</div>
 				</article>
 			{/each}
 		</div>
 
 		{#if projects.length > 1}
-			{#if canScrollPrevious}
-				<div
-					class="pointer-events-none absolute inset-y-0 left-0 z-10 w-24 bg-gradient-to-r from-white via-white/90 to-transparent"
-				></div>
-				<button
-					type="button"
-					class="absolute left-3 top-1/2 z-20 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-black bg-white text-xl shadow-sm hover:bg-black hover:text-white"
-					aria-label="Previous projects"
-					on:click={() => scrollCarousel(-1)}
-				>
-					&larr;
-				</button>
-			{/if}
-			{#if canScrollNext}
-				<div
-					class="pointer-events-none absolute inset-y-0 right-0 z-10 w-24 bg-gradient-to-l from-white via-white/90 to-transparent"
-				></div>
-				<button
-					type="button"
-					class="absolute right-3 top-1/2 z-20 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-full border border-black bg-white text-xl shadow-sm hover:bg-black hover:text-white"
-					aria-label="Next projects"
-					on:click={() => scrollCarousel(1)}
-				>
-					&rarr;
-				</button>
-			{/if}
+			<div class="mt-4 flex items-center justify-between">
+				{#if canScrollPrevious}
+					<button
+						type="button"
+						class="flex h-10 w-10 items-center justify-center rounded-full border border-black bg-white text-xl shadow-sm hover:bg-black hover:text-white"
+						aria-label="Previous projects"
+						on:click={() => scrollCarousel(-1)}
+					>
+						&larr;
+					</button>
+				{:else}
+					<div class="h-10 w-10" aria-hidden="true"></div>
+				{/if}
+				{#if canScrollNext}
+					<button
+						type="button"
+						class="flex h-10 w-10 items-center justify-center rounded-full border border-black bg-white text-xl shadow-sm hover:bg-black hover:text-white"
+						aria-label="Next projects"
+						on:click={() => scrollCarousel(1)}
+					>
+						&rarr;
+					</button>
+				{:else}
+					<div class="h-10 w-10" aria-hidden="true"></div>
+				{/if}
+			</div>
 		{/if}
 	</div>
 {/if}
