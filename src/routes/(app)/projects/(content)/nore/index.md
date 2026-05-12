@@ -8,7 +8,7 @@
 		description:
 			"Developed NoRe, a system transforms users' written journal entries into emotionally resonant musical compositions.",
 		thumbnail,
-		tags: ['DIS25',  ],
+		tags: ['DIS25', 'cross-modal interaction', 'AI-generated music'],
 		role: 'Co-project leader (Project planning, user research, developing, paper writing)',
 		links: [
 			{ type: 'pdf', url: '/pdfs/dis25nore.pdf' },
