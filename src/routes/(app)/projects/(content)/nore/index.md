@@ -10,7 +10,7 @@
 		thumbnail,
 		tags: ['DIS25', 'cross-modal interaction', 'AI-generated music'],
 		selected: true,
-		role: 'Co-project leader (Project planning, user research, developing, paper writing)',
+		role: 'Co-project leader (Project planning, user research, system development, paper writing)',
 		links: [
 			{ type: 'pdf', url: '/pdfs/dis25nore.pdf' },
 			{ type: 'doi', url: 'https://doi.org/10.1145/3715336.3735845' },
