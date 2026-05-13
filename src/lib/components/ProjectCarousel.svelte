@@ -27,7 +27,7 @@
 
 	const scrollCarousel = (direction: -1 | 1) => {
 		carouselEl?.scrollBy({
-			left: direction * 280,
+			left: direction * 240,
 			behavior: 'smooth'
 		});
 	};
@@ -49,12 +49,12 @@
 		<div class="relative">
 			<!-- Scroll track holds fixed-width project cards and reports scroll changes for controls. -->
 			<div
-				class="carousel-track flex gap-4 overflow-x-auto pb-1"
+				class="carousel-track flex gap-3 overflow-x-auto pb-1"
 				bind:this={carouselEl}
 				on:scroll={updateScrollState}
 			>
 				{#each projects as project (project.id)}
-					<ProjectContainer {project} cardClass="w-72 flex-none" />
+					<ProjectContainer {project} widthClass="w-56 flex-none" heightClass="h-full" />
 				{/each}
 			</div>
 

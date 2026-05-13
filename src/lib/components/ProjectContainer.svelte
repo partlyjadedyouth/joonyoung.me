@@ -16,7 +16,23 @@
 	export let showLinks = true;
 	export let showYear = false;
 	export let linkToProject = true;
+	export let widthClass = 'w-full';
+	export let heightClass = 'h-full';
+	export let titleFontSizeClass = 'text-base';
+	export let bodyFontSizeClass = 'text-xs';
+	export let metaFontSizeClass = 'text-xs';
 	export let cardClass = '';
+
+	$: bodyClass = 'flex flex-1 flex-col p-3';
+	$: titleClass = `${titleFontSizeClass} font-medium leading-snug`;
+	$: descriptionClass = `mt-2 ${bodyFontSizeClass} font-light leading-normal text-gray-700`;
+	$: tagWrapperClass = 'mt-2 flex flex-wrap gap-1';
+	$: tagClass = `rounded-md border border-black px-1.5 ${metaFontSizeClass} font-regular`;
+	$: footerClass = 'mt-auto pt-3';
+	$: linkWrapperClass = 'flex flex-wrap gap-x-3 gap-y-1.5';
+	$: linkClass = `inline-flex items-center gap-1 ${metaFontSizeClass} font-light hover:underline`;
+	$: linkIconClass = 'h-3 w-3';
+	$: yearClass = `${metaFontSizeClass} font-light text-gray-600`;
 
 	const linkLabels: Record<string, string> = {
 		pdf: 'pdf',
@@ -45,7 +61,7 @@
 	when the card is configured to navigate to a project detail page.
 -->
 <article
-	class={`flex h-full flex-col overflow-hidden rounded-lg border border-gray-400 bg-white font-ibm transition-colors ${linkToProject ? 'hover:border-gray-800' : ''} ${cardClass}`}
+	class={`flex ${widthClass} ${heightClass} flex-col overflow-hidden rounded-lg border border-gray-400 bg-white font-ibm transition-colors ${linkToProject ? 'hover:border-gray-800' : ''} ${cardClass}`}
 >
 	{#if linkToProject}
 		<!-- Linked thumbnails make carousel and grid cards easy to open from the image. -->
@@ -67,24 +83,24 @@
 	{/if}
 
 	<!-- Card body keeps descriptive content above optional tags and footer metadata. -->
-	<div class="flex flex-1 flex-col p-4">
+	<div class={bodyClass}>
 		{#if linkToProject}
 			<a href={projectHref} class="hover:underline">
-				<h2 class="text-lg font-medium leading-snug">{project.title}</h2>
+				<h2 class={titleClass}>{project.title}</h2>
 			</a>
 		{:else}
-			<h2 class="text-lg font-medium leading-snug">{project.title}</h2>
+			<h2 class={titleClass}>{project.title}</h2>
 		{/if}
 
-		<p class="mt-3 text-sm font-light leading-relaxed text-gray-700">
+		<p class={descriptionClass}>
 			{project.description}
 		</p>
 
 		{#if project.tags.length > 0}
 			<!-- Tags summarize research areas and are omitted when the content data has none. -->
-			<div class="mt-2 flex flex-wrap gap-1.5">
+			<div class={tagWrapperClass}>
 				{#each project.tags as tag}
-					<span class="rounded-lg border border-black px-2 text-sm font-regular">
+					<span class={tagClass}>
 						{tag}
 					</span>
 				{/each}
@@ -93,17 +109,12 @@
 
 		{#if showYear || (showLinks && project.links.length > 0)}
 			<!-- Footer area is pushed to the bottom so cards in a grid keep aligned actions. -->
-			<div class="mt-auto pt-4">
+			<div class={footerClass}>
 				{#if showLinks && project.links.length > 0}
-					<div class="flex flex-wrap gap-x-4 gap-y-2">
+					<div class={linkWrapperClass}>
 						{#each project.links as link (`${project.id}-${link.type}-${link.url}`)}
-							<a
-								href={link.url}
-								target="_blank"
-								rel="noopener noreferrer"
-								class="inline-flex items-center gap-1 text-sm font-light hover:underline"
-							>
-								<img src={getLinkIcon(link.type)} alt="" class="h-3.5 w-3.5" />
+							<a href={link.url} target="_blank" rel="noopener noreferrer" class={linkClass}>
+								<img src={getLinkIcon(link.type)} alt="" class={linkIconClass} />
 								{getLinkLabel(link.type)}
 							</a>
 						{/each}
@@ -111,11 +122,7 @@
 				{/if}
 
 				{#if showYear}
-					<p
-						class={showLinks && project.links.length > 0
-							? 'mt-2 text-sm font-light text-gray-600'
-							: 'text-sm font-light text-gray-600'}
-					>
+					<p class={showLinks && project.links.length > 0 ? `mt-2 ${yearClass}` : yearClass}>
 						{project.year}
 					</p>
 				{/if}

@@ -25,9 +25,18 @@
 	<h1 class="font-ibm font-medium text-2xl mb-5">PROJECTS</h1>
 
 	<!-- Cards do not link through their footer resources here; the year acts as compact metadata. -->
-	<div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+	<div class="grid grid-cols-1 gap-4 justify-items-center md:grid-cols-2 md:justify-items-stretch">
 		{#each projects as project (project.id)}
-			<ProjectContainer {project} showLinks={false} showYear={true} />
+			<ProjectContainer
+				{project}
+				showLinks={false}
+				showYear={true}
+				widthClass="w-68 max-w-full"
+				heightClass="h-auto"
+				titleFontSizeClass="text-base"
+				bodyFontSizeClass="text-xs"
+				metaFontSizeClass="text-xs"
+			/>
 		{/each}
 	</div>
 </section>
