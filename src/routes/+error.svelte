@@ -15,25 +15,25 @@
 	const error = $derived(page.error);
 
 	// ASCII art for 404 error
-	const ascii404 = `    _  _    ___  _  _
-   | || |  / _ \\| || |
-   | || |_| | | | || |_
-   |__   _| | | |__   _|
-      | | | |_| |  | |
-      |_|  \\___/   |_|  `;
+	const ascii404 = `    __ __   ___  __ __
+   / // /  / _ \\/ // /
+  / // /_ / // / // /_
+ /__  __// // /__  __/
+   /_/   \\___/  /_/   `;
 
 	// ASCII art for 500 error
-	const ascii500 = `    ___   ___   ___
-   | __| / _ \\ / _ \\
-   |__ \\| | | | | | |
-   |___/| |_| | |_| |
-        \\___/ \\___/ `;
+	const ascii500 = `    ______   ___   ___
+   / ____/  / _ \\ / _ \\
+  /___ \\   / // // // /
+ ____/ /  / // // // /
+/_____/   \\___/ \\___/ `;
 
 	// ASCII art for other errors
-	const asciiGeneric = `   ___ _ __ _ __
-  / _ \\ '__| '__|
- |  __/ |  | |
-  \\___|_|  |_|   `;
+	const asciiGeneric = `    ______ ___   ___
+   / ____// _ \\ / _ \\
+  / __/  / , _// , _/
+ / /___ / /| |/ /| |
+/_____//_/ |_/_/ |_| `;
 
 	// Select ASCII art based on status code
 	const asciiArt = $derived(status === 404 ? ascii404 : status >= 500 ? ascii500 : asciiGeneric);
