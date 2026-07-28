@@ -34,6 +34,8 @@
 <!-- Identity header introduces the researcher before the longer biography below. -->
 <section class="flex flex-col items-start mb-7">
 	<!-- Profile pic -->
+	<!-- Re-enabling this needs @sveltejs/enhanced-img reinstalled and re-added to vite.config.ts;
+	     it was dropped since nothing rendered it and it pulled a vulnerable sharp/libvips. -->
 	<!-- <enhanced:img alt="profile pic" src="$lib/images/profile.png" class="w-36 rounded-full" /> -->
 	<!-- Name and affiliation links remain compact so they work as the page's opening signature. -->
 	<h1 class="font-semibold font-mono text-2xl">Joonyoung Park</h1>
