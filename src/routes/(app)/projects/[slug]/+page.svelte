@@ -140,7 +140,10 @@
 
 <svelte:head>
 	<title>{project.title}</title>
-	<meta name="description" content="Joonyoung's Blog" />
+	<meta
+		name="description"
+		content={project.description || `${project.title} — a project by Joonyoung Park.`}
+	/>
 </svelte:head>
 
 <!-- Project header presents date, award, title, subtitle, and resource links above the markdown body. -->

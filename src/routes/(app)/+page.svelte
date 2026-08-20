@@ -22,7 +22,10 @@
 
 <svelte:head>
 	<title>joonyoung park</title>
-	<meta name="description" content="Joonyoung's Blog" />
+	<meta
+		name="description"
+		content="Joonyoung Park is a Ph.D. student at DxD Lab, KAIST, researching human-AI interaction. Portfolio of his projects, publications, and news."
+	/>
 </svelte:head>
 
 <!-- Opening profile section establishes identity and contact context before listing work. -->

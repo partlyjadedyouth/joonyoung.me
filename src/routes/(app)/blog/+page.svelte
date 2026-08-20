@@ -15,7 +15,10 @@
 
 <svelte:head>
 	<title>blog | joonyoung park</title>
-	<meta name="description" content="Joonyoung's Blog" />
+	<meta
+		name="description"
+		content="Blog by Joonyoung Park — notes and writing on HCI, human-AI interaction, and research."
+	/>
 </svelte:head>
 
 <!-- Blog archive section mirrors the spacing and heading scale of other index routes. -->

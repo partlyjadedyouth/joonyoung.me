@@ -46,7 +46,10 @@
 
 <svelte:head>
 	<title>about | joonyoung park</title>
-	<meta name="description" content="Joonyoung's Blog" />
+	<meta
+		name="description"
+		content="About Joonyoung Park — Ph.D. student at DxD Lab, KAIST. Background, CV, and research in human-AI interaction and HCI."
+	/>
 </svelte:head>
 
 <!-- Contact header gives visitors quick access to the CV, website, email, and LinkedIn profile. -->

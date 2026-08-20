@@ -17,7 +17,10 @@
 
 <svelte:head>
 	<title>projects | joonyoung park</title>
-	<meta name="description" content="Joonyoung's Blog" />
+	<meta
+		name="description"
+		content="Projects by Joonyoung Park — HCI and human-AI interaction research, systems, and design work."
+	/>
 </svelte:head>
 
 <!-- Main archive section mirrors the vertical spacing used by other route pages. -->

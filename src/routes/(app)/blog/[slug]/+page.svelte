@@ -171,7 +171,10 @@
 
 <svelte:head>
 	<title>{post.title}</title>
-	<meta name="description" content="Joonyoung's Blog" />
+	<meta
+		name="description"
+		content={post.description || `${post.title} — a post by Joonyoung Park.`}
+	/>
 </svelte:head>
 
 <!-- Blog post header centers the title and date before the rendered markdown body. -->
