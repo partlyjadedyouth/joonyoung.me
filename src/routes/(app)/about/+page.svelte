@@ -234,7 +234,7 @@
 		<b class="font-medium">Graduate Teaching Assistant, </b> KAIST
 		<div class="font-light mr-1 text-sm">
 			Design Thinking for Startup (KEI560) <span class="font-extralight">
-				Spring 2025 - Spring 2026</span
+				Spring 2025 - Fall 2026</span
 			>
 		</div>
 		<div class="font-light mr-1 text-sm">
