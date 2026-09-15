@@ -19,8 +19,6 @@
 
 **Vibe coding** hands the implementation over to AI agents. The developer describes what they want, and the agent explores the project, edits files, and iterates on the result. This changes what programming asks of a developer: less sustained attention on writing code, more directing and orchestrating agents.
 
-We were curious what this shift means for **ADHD software developers.** Their traits often became difficulties in conventional programming, where progress depended on staying with one task from start to finish. We asked whether the same traits look different once agents carry out the implementation.
+We were curious what this shift means for **ADHD software developers.** Their traits often became difficulties in conventional programming, where progress depended on staying with one task from start to finish. We wanted to investigate whether the same traits look different once agents carry out the implementation.
 
-To find out, we ran a **diary study with ADHD software developers.** Participants rediscovered traits that had been constrained as strengths. But at the same time, vibe coding brought new tensions; managing a much broader context, and stopping before exhaustion when nothing in the tool signaled an end, fell entirely on the developers.
-
-This project is work in progress.
+We're currently working on this project, and we're hoping to share it with the community soon :)
