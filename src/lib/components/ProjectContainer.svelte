@@ -25,6 +25,8 @@
 
 	$: bodyClass = 'flex flex-1 flex-col p-3';
 	$: titleClass = `${titleFontSizeClass} font-medium leading-snug`;
+	// Cards prefer the short title when a project defines one; otherwise fall back to the full title.
+	$: cardTitle = project.shortTitle?.trim() || project.title;
 	$: descriptionClass = `mt-2 ${bodyFontSizeClass} font-light leading-normal text-gray-700`;
 	$: tagWrapperClass = 'mt-2 flex flex-wrap gap-1';
 	$: tagClass = `rounded-md border border-black px-1.5 ${metaFontSizeClass} font-regular`;
@@ -67,7 +69,7 @@
 		<!-- Linked thumbnails make carousel and grid cards easy to open from the image. -->
 		<a href={projectHref} class="block border-b border-gray-300">
 			<img
-				alt={project.title}
+				alt={cardTitle}
 				src={project.thumbnail}
 				class="aspect-[4/3] w-full rounded-t-lg object-cover"
 			/>
@@ -75,7 +77,7 @@
 	{:else}
 		<div class="border-b border-gray-300">
 			<img
-				alt={project.title}
+				alt={cardTitle}
 				src={project.thumbnail}
 				class="aspect-[4/3] w-full rounded-t-lg object-cover"
 			/>
@@ -86,10 +88,10 @@
 	<div class={bodyClass}>
 		{#if linkToProject}
 			<a href={projectHref} class="hover:underline">
-				<h2 class={titleClass}>{project.title}</h2>
+				<h2 class={titleClass}>{cardTitle}</h2>
 			</a>
 		{:else}
-			<h2 class={titleClass}>{project.title}</h2>
+			<h2 class={titleClass}>{cardTitle}</h2>
 		{/if}
 
 		<p class={descriptionClass}>

@@ -5,6 +5,7 @@
 		id: 'home-care',
 		year: '2025-2026',
 		title: '"I Choose to Live, for Life Itself": Understanding Agency of Home-Based Care Patients Through Information Practices and Relational Dynamics in Care Networks',
+		shortTitle: 'Understanding Agency of Home-Based Care Patients Through Information Practices and Relational Dynamics in Care Networks',
 		description:
 			"A study on home-based care that explains how patient agency is expressed at home and why it often disappears from the care",
 		thumbnail,
