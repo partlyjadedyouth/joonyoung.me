@@ -9,7 +9,6 @@
 			"A study on LLM-generated documents that transform clinical notes into patient-friendly forms to support patient participation in emergency care",
 		thumbnail,
 		tags: ['Scientific Reports', 'healthcare', 'AI-mediated communication'],
-		selected: true,
 		award: "",
 		role: 'System development, paper writing',
 		links: [

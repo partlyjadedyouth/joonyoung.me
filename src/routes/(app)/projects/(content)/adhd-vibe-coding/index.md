@@ -9,7 +9,6 @@
 			'A diary study on how ADHD software developers vibe-code',
 		thumbnail,
 		tags: ['work in progress', 'accessibility', 'vibe coding'],
-		selected: false,
 		role: 'Project leader (Project planning, data collection and analysis, paper writing)',
 		links: []
 	};

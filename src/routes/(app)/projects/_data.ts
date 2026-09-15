@@ -40,4 +40,17 @@ export const getAllProjects = () => projects.slice();
 
 export const getLatestProjects = (limit: number) => projects.slice(0, limit);
 
-export const getSelectedProjects = () => projects.filter((project) => project.selected);
+/**
+ * Projects featured on the homepage carousel, in display order. Add, remove, or move
+ * an id here instead of touching each project's metadata.
+ */
+const SELECTED_PROJECT_IDS = ['home-care', 'nore', 'pfcn', 'ischive'];
+
+export const getSelectedProjects = () =>
+	SELECTED_PROJECT_IDS.map((id) => {
+		const project = projects.find((p) => p.id === id);
+		if (!project) {
+			throw new Error(`Selected project "${id}" has no matching index.md`);
+		}
+		return project;
+	});

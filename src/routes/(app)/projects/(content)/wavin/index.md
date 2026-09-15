@@ -11,7 +11,6 @@
 			'Conducted HCI research to enhance the usability of a mobile music streaming app for Deaf and Hard of Hearing users',
 		thumbnail,
 		tags: ['coursework', 'research', 'D/HH', 'accessibility'],
-		selected: false,
 		role: 'Project leader (Project planning, user research, design, paper writing)',
 		links: [
 			{ type: 'pdf', url: paper },

@@ -10,7 +10,6 @@ export interface Project {
 	description: string;
 	thumbnail: string;
 	tags: string[];
-	selected?: boolean;
 	role: string;
 	award?: string;
 	links: LinkDetails[];

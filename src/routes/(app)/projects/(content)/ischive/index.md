@@ -9,7 +9,6 @@
 			'Developed a website that archives coursework submitted by Dept. of Information Science students',
 		thumbnail,
 		tags: ['develop'],
-		selected: true,
 		role: 'Project leader(2024-1), web development, service design, website maintenance',
 		links: [{ type: 'web', url: 'https://ischive.com' }]
 	};

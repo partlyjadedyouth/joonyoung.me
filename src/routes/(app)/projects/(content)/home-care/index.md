@@ -9,7 +9,6 @@
 			"A study on home-based care that explains how patient agency is expressed at home and why it often disappears from the care",
 		thumbnail,
 		tags: ['CHI26', 'accessibility', 'care'],
-		selected: true,
 		award: "CHI26 Honorable Mention",
 		role: 'Co-project leader (Project planning, data analysis, paper writing)',
 		links: [
