@@ -2,7 +2,7 @@
 	import thumbnail from './hbc.png?url';
 
 	export const metadata = {
-		id: 'chi26',
+		id: 'home-care',
 		year: '2025-2026',
 		title: '"I Choose to Live, for Life Itself": Understanding Agency of Home-Based Care Patients Through Information Practices and Relational Dynamics in Care Networks',
 		description:
