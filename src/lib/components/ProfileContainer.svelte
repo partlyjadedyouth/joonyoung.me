@@ -38,7 +38,13 @@
 	     it was dropped since nothing rendered it and it pulled a vulnerable sharp/libvips. -->
 	<!-- <enhanced:img alt="profile pic" src="$lib/images/profile.png" class="w-36 rounded-full" /> -->
 	<!-- Name and affiliation links remain compact so they work as the page's opening signature. -->
-	<h1 class="font-semibold font-mono text-2xl">Joonyoung Park</h1>
+	<h1 class="flex flex-wrap items-baseline gap-x-2 font-semibold font-mono text-2xl">
+		Joonyoung Park
+		<!-- IPA uses IBM Plex Sans: JetBrains Mono lacks glyphs such as ɕ, ʌ and the k̚ diacritic. -->
+		<span class="hidden sm:inline font-ibm text-base font-normal" lang="ko-Latn-fonipa" title="Pronunciation (IPA)">
+			[tɕu.njʌŋ pak̚ ]
+		</span>
+	</h1>
 	<div class="font-medium font-ibm">
 		Ph.D. Student @
 		<a
@@ -53,7 +59,7 @@
 </section>
 
 <!-- Self-introduction paragraphs mix static text with outbound academic and personal references. -->
-<section class="flex flex-col font-ibm font-light text-md hyphens-auto mb-7">
+<section class="flex flex-col font-ibm font-light hyphens-auto mb-7">
 	<p class="mb-3">
 		I am an HCI researcher and a Ph.D. student in the
 		<a
