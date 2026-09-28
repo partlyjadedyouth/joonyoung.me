@@ -233,8 +233,13 @@
 	<div class="mt-2">
 		<b class="font-medium">Graduate Teaching Assistant, </b> KAIST
 		<div class="font-light mr-1 text-sm">
+			Special Issues in Entrepreneurship & Innovation (KEI580) <span class="font-extralight">
+				Fall 2026</span
+			>
+		</div>
+		<div class="font-light mr-1 text-sm">
 			Design Thinking for Startup (KEI560) <span class="font-extralight">
-				Spring 2025 - Fall 2026</span
+				Spring 2025 - Spring 2026</span
 			>
 		</div>
 		<div class="font-light mr-1 text-sm">
@@ -254,8 +259,14 @@
 			<HorizontalLine w="full" my="0" color="bg-black/20" />
 		</div> -->
 	</div>
-	<div class="font-light mr-1 text-sm">ACM CHI <span class="font-extralight"> 2025-2026</span></div>
-	<div class="font-light mr-1 text-sm">ACM DIS <span class="font-extralight"> 2025-2026</span></div>
+	<div class="font-light mr-1 text-sm">
+		ACM Conference on Human Factors in Computing Systems (CHI) <span class="font-extralight">
+			2025-2026</span
+		>
+	</div>
+	<div class="font-light mr-1 text-sm">
+		ACM Designing Interactive Systems (DIS) <span class="font-extralight"> 2025-2026</span>
+	</div>
 </section>
 
 <!-- Awards and honors section lists recognitions with short explanatory subtitles. -->

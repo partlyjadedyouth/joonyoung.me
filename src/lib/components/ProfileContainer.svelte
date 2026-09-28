@@ -41,7 +41,11 @@
 	<h1 class="flex flex-wrap items-baseline gap-x-2 font-semibold font-mono text-2xl">
 		Joonyoung Park
 		<!-- IPA uses IBM Plex Sans: JetBrains Mono lacks glyphs such as ɕ, ʌ and the k̚ diacritic. -->
-		<span class="hidden sm:inline font-ibm text-base font-normal" lang="ko-Latn-fonipa" title="Pronunciation (IPA)">
+		<span
+			class="hidden sm:inline font-ibm text-base font-normal"
+			lang="ko-Latn-fonipa"
+			title="Pronunciation (IPA)"
+		>
 			[tɕu.njʌŋ pak̚ ]
 		</span>
 	</h1>
@@ -90,9 +94,11 @@
 	</p>
 	<p class="mb-3">
 		My research interests lie at the intersection of Human-Computer Interaction (HCI), Human-AI
-		Interaction (HAI), and AI-mediated communication. Specifically, I aim to explore ways to improve
-		technological accessibility and create new opportunities for marginalized people through
-		multi-modal and cross-modal interactions.
+		Interaction (HAI), and AI-mediated communication. Specifically, I study how AI agents and
+		multimodal generative systems reshape the ways people work and communicate with one another, and
+		whose needs these changes fail to accommodate. Drawing on the lived experiences of people from
+		diverse backgrounds, I establish user-centered criteria for AI embedded in the sociotechnical
+		systems of everyday life and build systems that put these criteria into practice.
 	</p>
 	<p class="mb-3">
 		Prior to my graduate studies, I received a B.S. in
@@ -102,7 +108,7 @@
 			rel="noopener noreferrer"
 			class="font-medium hover:underline"
 		>
-			Electrical & Computer Engineering
+			Electrical and Computer Engineering
 		</a>
 		and a B.A. in
 		<a
