@@ -1,7 +1,7 @@
 <!--
 	+page.svelte
 	Renders an individual project detail page. It receives frontmatter metadata from
-	the server load function, dynamically imports the matching markdown body, and then
+	the server load function, receives the matching markdown body from the universal load function, and then
 	applies consistent spacing, link styling, and image presentation to the rendered
 	markdown content.
 -->
@@ -10,7 +10,6 @@
 	import LinkContainer from '$lib/components/LinkContainer.svelte';
 	import awardIcon from '$lib/images/award.png';
 	import type { PageData } from './$types';
-	import type { Component } from 'svelte';
 
 	// Route data includes the URL slug and project frontmatter found on the server.
 	let { data }: { data: PageData } = $props();
@@ -31,10 +30,8 @@
 	};
 	let titleParts = $derived(splitProjectTitle(project.title));
 
-	const projectModules = import.meta.glob('/src/routes/**/index.md');
-	let Content = $state<Component | null>(null);
-	let contentError = $state<Error | null>(null);
-	let isLoading = $state(false);
+	// The markdown body is resolved in the universal load function so it is server-rendered.
+	let Content = $derived(data.Content);
 	let postContainerEl = $state<HTMLDivElement | null>(null);
 
 	// Markdown output does not know about the page layout, so direct children receive spacing classes here.
@@ -92,32 +89,6 @@
 		addHoverEffectToLinks();
 		alignImageCaptionsCenter();
 	}
-
-	// Load the route-specific markdown component whenever the slug changes.
-	$effect(() => {
-		const modulePath = `/src/routes/(app)/projects/(content)/${slug}/index.md`;
-		const loader = projectModules[modulePath];
-		Content = null;
-		contentError = null;
-		isLoading = true;
-
-		if (!loader) {
-			contentError = new Error('Project content not found');
-			isLoading = false;
-			return;
-		}
-
-		loader()
-			.then((module) => {
-				Content = (module as { default: Component }).default;
-			})
-			.catch((error) => {
-				contentError = error as Error;
-			})
-			.finally(() => {
-				isLoading = false;
-			});
-	});
 
 	// Observe the markdown container because dynamically imported content arrives after initial render.
 	$effect(() => {
@@ -190,19 +161,13 @@
 	</div>
 
 	<div class="mt-5 font-ibm">
-		<!-- Markdown body renders through a dynamic Svelte component with loading and error states. -->
+		<!-- Markdown body renders through the component resolved by the route load function. -->
 		<div
 			class="font-light hyphenate flex flex-col space-y-5"
 			id="post-container"
 			bind:this={postContainerEl}
 		>
-			{#if isLoading}
-				<p class="text-sm text-gray-500">Loading content...</p>
-			{:else if contentError}
-				<p class="text-sm text-gray-500">Failed to load content.</p>
-			{:else if Content}
-				<Content />
-			{/if}
+			<Content />
 		</div>
 		<!-- Role summary explains the author's contribution after the project narrative. -->
 		<div class="sm:mx-10">

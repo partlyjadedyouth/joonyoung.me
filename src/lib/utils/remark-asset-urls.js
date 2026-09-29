@@ -17,20 +17,31 @@ const escapeAttr = (value) =>
 export function remarkAssetUrls() {
 	/** @param {Root} tree */
 	return (tree) => {
+		/** @type {string[]} */
+		const imports = [];
+
 		visit(tree, 'image', /** @param {Image} node */ (node) => {
 			if (!isRelativeUrl(node.url)) {
 				return;
 			}
 
+			// Imported asset URLs resolve identically during SSR and in the browser,
+			// unlike `new URL(..., import.meta.url)`, which yields file:// paths on the server.
+			const name = `__asset${imports.length}`;
+			imports.push(`import ${name} from '${node.url}';`);
+
 			const alt = escapeAttr(node.alt || '');
 			const title = node.title ? ` title="${escapeAttr(node.title)}"` : '';
-			const src = `{new URL('${node.url}', import.meta.url).href}`;
 
 			node.type = 'html';
-			node.value = `<img src=${src} alt="${alt}"${title} />`;
+			node.value = `<img src={${name}} alt="${alt}"${title} />`;
 			delete node.url;
 			delete node.alt;
 			delete node.title;
 		});
+
+		if (imports.length > 0) {
+			tree.children?.unshift({ type: 'html', value: `<script>\n${imports.join('\n')}\n</script>` });
+		}
 	};
 }
