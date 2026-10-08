@@ -261,7 +261,7 @@
 	</div>
 	<div class="font-light mr-1 text-sm">
 		ACM Conference on Human Factors in Computing Systems (CHI) <span class="font-extralight">
-			2025-2026</span
+			2025-2027</span
 		>
 	</div>
 	<div class="font-light mr-1 text-sm">
